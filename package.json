@@ -14,16 +14,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.0",
+    "@react-three/drei": "^9.99.7",
+    "@react-three/fiber": "^8.15.19",
+    "@react-three/postprocessing": "^2.16.0",
+    "@types/three": "^0.162.0",
+    "howler": "^2.2.4",
+    "next": "14.1.2",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.2"
+    "sass": "^1.71.1",
+    "three": "^0.162.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/howler": "^2.2.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.1.2"
+    "eslint-config-next": "14.1.2",
+    "r3f-perf": "^7.1.2",
+    "typescript": "^5"
   }
 }
