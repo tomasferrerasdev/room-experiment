@@ -1,16 +1,76 @@
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { Howl } from "howler";
+import { useSceneCursor } from "@/store/scene-cursor";
+import { useSceneActions } from "@/store/scene-actions";
+import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
+import { useMenu } from "@/store/interact-menu";
+import { useSceneStore } from "@/store/scene-store";
 
-export const Scene = ({ setIsHover }: any) => {
+export const Scene = () => {
   const group = useRef<any>();
-  const { nodes, materials, animations }: any = useGLTF("/models/office.glb");
+  const { nodes, materials, animations }: any = useGLTF("/models/scene.glb");
   const { actions } = useAnimations(animations, group);
+  const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
+  const { setScene } = useSceneStore();
+
   useEffect(() => {
     actions["Cat-Clock-Loop"]?.play();
   }, []);
+
   return (
     <group ref={group} dispose={null}>
       <group name="Scene">
+        <group
+          name="Sketchfab_model"
+          position={[0, 0.53, -3.819]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={0.003}
+          onPointerOver={() => setIsHoverOn("radio music player")}
+          onPointerOut={setIsHoverOff}
+          onClick={(e) => {
+            setScene({
+              cameraConfig: {
+                lookAt: [-5, 0, 0],
+                position: [-1.8, 1.0, -0.3],
+              },
+              soundSrc: "/audio/musicPlayer.mp3",
+              quote:
+                "Ready to dive into my life's playlist? Pick a track, and add some beats to this!",
+              interactMenu: {
+                previousTrack: false,
+                exit: true,
+                nextTrack: false,
+              },
+            });
+          }}
+        >
+          <group
+            name="45f7aca418ac4ddd89c4a8cf16230b02fbx"
+            rotation={[Math.PI / 2, 0, 0]}
+          >
+            <group name="RootNode">
+              <group
+                name="Radio_lowPoly_Versia_2"
+                position={[0, 18.707, 0]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              >
+                <mesh
+                  name="Radio_lowPoly_Versia_2_Material020_0"
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Radio_lowPoly_Versia_2_Material020_0.geometry}
+                  material={materials["Material.020"]}
+                  position={[-8.136, -10.039, 0.545]}
+                  rotation={[0, 0, 1.252]}
+                  scale={1.419}
+                />
+              </group>
+            </group>
+          </group>
+        </group>
         <group name="Vert" />
         <mesh
           name="Table001"
@@ -38,6 +98,8 @@ export const Scene = ({ setIsHover }: any) => {
           material={materials["Material.002"]}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
+          onPointerOver={() => setIsHoverOn("wires")}
+          onPointerOut={setIsHoverOff}
         />
         <mesh
           name="Sm_BK_Wire_03"
@@ -66,10 +128,10 @@ export const Scene = ({ setIsHover }: any) => {
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
         />
-
         <group
-          onPointerOver={(e) => setIsHover(true)}
-          onPointerOut={(e) => setIsHover(false)}
+          name="computer"
+          onPointerOver={() => setIsHoverOn("computer")}
+          onPointerOut={setIsHoverOff}
         >
           <mesh
             name="SM_screen"
@@ -182,8 +244,6 @@ export const Scene = ({ setIsHover }: any) => {
           material={materials["mt_background.001"]}
           position={[-3.28, 1.493, -1.958]}
           scale={[1, 0.8, 1]}
-          onPointerOver={(e) => setIsHover(true)}
-          onPointerOut={(e) => setIsHover(false)}
         />
         <mesh
           name="Door"
@@ -194,9 +254,33 @@ export const Scene = ({ setIsHover }: any) => {
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
         />
+        <mesh
+          name="doom"
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane.geometry}
+          material={materials["Material.001"]}
+          position={[2.312, 1.249, -2.971]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[0.24, 0.356, 0.356]}
+          onPointerOver={() => setIsHoverOn("DOOM")}
+          onPointerOut={setIsHoverOff}
+        />
+        <mesh
+          name="ultraman"
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane001.geometry}
+          material={materials["Material.003"]}
+          position={[-3.69, 1.091, -1.216]}
+          rotation={[Math.PI / 2, 0, -1.567]}
+          scale={[0.24, 0.356, 0.356]}
+          onPointerOver={() => setIsHoverOn("Ultraman")}
+          onPointerOut={setIsHoverOff}
+        />
       </group>
     </group>
   );
 };
 
-useGLTF.preload("/models/office.glb");
+useGLTF.preload("/models/scene.glb");

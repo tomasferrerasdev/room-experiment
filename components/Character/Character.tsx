@@ -9,16 +9,16 @@ export const Character = (props: any) => {
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    actions["The-Room-Desk-Code"]?.play();
+    actions["Common-Idle"]?.play();
   }, []);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group
           name="Armature"
-          rotation={[Math.PI / 2, 0, Math.PI * 0.75]}
+          rotation={[Math.PI / 2, 0, 0]}
           scale={0.01}
-          position={[-1, 0, -3]}
+          position={[0, 0, -1.5]}
         >
           <primitive object={nodes.mixamorigHips} />
         </group>
@@ -37,12 +37,6 @@ export const Character = (props: any) => {
             skeleton={nodes.Teodoro001_1.skeleton}
           />
           <skinnedMesh
-            name="Teodoro001_2"
-            geometry={nodes.Teodoro001_2.geometry}
-            material={materials.PaletteMaterial004}
-            skeleton={nodes.Teodoro001_2.skeleton}
-          />
-          <skinnedMesh
             name="Teodoro001_3"
             geometry={nodes.Teodoro001_3.geometry}
             material={materials.BODY}
@@ -59,12 +53,6 @@ export const Character = (props: any) => {
             geometry={nodes.Teodoro001_5.geometry}
             material={materials.PaletteMaterial005}
             skeleton={nodes.Teodoro001_5.skeleton}
-          />
-          <skinnedMesh
-            name="Teodoro001_6"
-            geometry={nodes.Teodoro001_6.geometry}
-            material={materials.PaletteMaterial006}
-            skeleton={nodes.Teodoro001_6.skeleton}
           />
         </group>
       </group>

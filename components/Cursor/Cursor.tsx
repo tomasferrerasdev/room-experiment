@@ -2,15 +2,14 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import React from "react";
 import styles from "./Cursor.module.scss";
-import { Howl, Howler } from "howler";
+import { useSceneCursor } from "@/store/scene-cursor";
 
-export const Cursor = ({ isHover }: any) => {
+export const Cursor = () => {
+  const { isHover, hoverMessage } = useSceneCursor();
   useGSAP(() => {
     gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
-    let targets = gsap.utils.toArray(".target");
     let xSetter = gsap.quickSetter(".cursor", "x", "px");
     let ySetter = gsap.quickSetter(".cursor", "y", "px");
-    console.log(targets);
 
     window.addEventListener("mousemove", (e) => {
       xSetter(e.x);
@@ -18,23 +17,22 @@ export const Cursor = ({ isHover }: any) => {
     });
   });
 
-  const playAudio = () => {
-    const sound = new Howl({
-      src: ["/audio/voiceMock.mp3"],
-    });
-
-    sound.play();
-  };
-
   return (
     <div className={`${styles.cursor} cursor`}>
       {isHover ? (
-        <img
-          src="/assets/eye.gif"
-          width={46}
-          height={46}
-          alt="eye gif cursor"
-        />
+        <>
+          <img
+            src="/assets/eye.gif"
+            width={46}
+            height={46}
+            alt="eye gif cursor"
+          />
+          {hoverMessage && (
+            <div className={styles.cursorMessage}>
+              <span>{hoverMessage}</span>
+            </div>
+          )}
+        </>
       ) : (
         <img
           src="/assets/cursor.png"
