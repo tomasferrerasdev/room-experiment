@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useGLTF, useAnimations, Line } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { Line, useAnimations, useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import * as THREE from 'three';
 
 export const Character = (props: any) => {
   const [curPointIndex, setCurPointIndex] = useState(0);
   const group = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF(
-    "/models/character.glb"
+    '/models/character.glb'
   );
   const { actions } = useAnimations(animations, group);
   const [isMoving, setIsMoving] = useState(false);
@@ -22,16 +22,16 @@ export const Character = (props: any) => {
   });
 
   const handleMove = (event: KeyboardEvent) => {
-    if (event.key === "ArrowLeft") {
+    if (event.key === 'ArrowLeft') {
       setCurPointIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      actions["Common-Walking"]?.play();
+      actions['Common-Walking']?.play();
       setIsMoving(true);
       group.current.rotation.set(0, -Math.PI / 2, 0);
-    } else if (event.key === "ArrowRight") {
+    } else if (event.key === 'ArrowRight') {
       setCurPointIndex((prevIndex) =>
         Math.min(prevIndex + 1, linePoints.length - 1)
       );
-      actions["Common-Walking"]?.play();
+      actions['Common-Walking']?.play();
       setIsMoving(true);
       group.current.rotation.set(0, Math.PI / 2, 0);
     }
@@ -42,11 +42,11 @@ export const Character = (props: any) => {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handleMove);
-    document.addEventListener("keyup", handleStop); // Add event listener for keyup
+    document.addEventListener('keydown', handleMove);
+    document.addEventListener('keyup', handleStop); // Add event listener for keyup
     return () => {
-      document.removeEventListener("keydown", handleMove);
-      document.removeEventListener("keyup", handleStop); // Remove event listener on cleanup
+      document.removeEventListener('keydown', handleMove);
+      document.removeEventListener('keyup', handleStop); // Remove event listener on cleanup
     };
   }, []);
 
@@ -54,7 +54,7 @@ export const Character = (props: any) => {
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
       [
-        new THREE.Vector3(-3, 0, -2.2),
+        new THREE.Vector3(-2.7, 0, -2.2),
         new THREE.Vector3(-2, 0, -2.2),
         new THREE.Vector3(0, 0, -1.5),
         new THREE.Vector3(1, 0, -1.5),
@@ -62,7 +62,7 @@ export const Character = (props: any) => {
         new THREE.Vector3(1.6, 0, -2.8),
       ],
       false,
-      "catmullrom"
+      'catmullrom'
     );
   }, []);
 
@@ -117,9 +117,9 @@ export const Character = (props: any) => {
           </group>
         </group>
       </group>
-      <Line points={linePoints} color={"white"} linewidth={3} lineWidth={3} />
+      <Line points={linePoints} color={'white'} linewidth={3} lineWidth={3} />
     </>
   );
 };
 
-useGLTF.preload("/models/character.glb");
+useGLTF.preload('/models/character.glb');
