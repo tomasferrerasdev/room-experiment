@@ -10,6 +10,7 @@ export const InteractionMenu = () => {
     if (!scene.quote) return;
     const sound = new Howl({
       src: [scene.soundSrc],
+      volume: 0.2,
       onend: () => {
         setScene({ quote: "" });
       },

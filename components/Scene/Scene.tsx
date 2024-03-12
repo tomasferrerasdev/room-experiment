@@ -1,11 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
-import { Howl } from "howler";
 import { useSceneCursor } from "@/store/scene-cursor";
-import { useSceneActions } from "@/store/scene-actions";
-import { useThree } from "@react-three/fiber";
-import * as THREE from "three";
-import { useMenu } from "@/store/interact-menu";
 import { useSceneStore } from "@/store/scene-store";
 
 export const Scene = () => {
@@ -32,16 +27,16 @@ export const Scene = () => {
           onClick={(e) => {
             setScene({
               cameraConfig: {
-                lookAt: [-5, 0, 0],
-                position: [-1.8, 1.0, -0.3],
+                rotation: [0, 1.3, 0],
+                position: [-1.2, 0.9, -0.5],
               },
               soundSrc: "/audio/musicPlayer.mp3",
               quote:
-                "Ready to dive into my life's playlist? Pick a track, and add some beats to this!",
+                "Ready to dive into my life's playlist? Pick a track and some beats to this!",
               interactMenu: {
-                previousTrack: false,
+                previousTrack: true,
                 exit: true,
-                nextTrack: false,
+                nextTrack: true,
               },
             });
           }}
@@ -132,6 +127,22 @@ export const Scene = () => {
           name="computer"
           onPointerOver={() => setIsHoverOn("computer")}
           onPointerOut={setIsHoverOff}
+          onClick={(e) => {
+            setScene({
+              cameraConfig: {
+                rotation: [-0.2, 0.4, 0],
+                position: [-0.9, 1.5, -2.1],
+              },
+              soundSrc: "/audio/doom.mp3",
+              quote:
+                "Playing doom! my therapy session, involves a shotgun and a lot demon-splattering",
+              interactMenu: {
+                previousTrack: false,
+                exit: true,
+                nextTrack: false,
+              },
+            });
+          }}
         >
           <mesh
             name="SM_screen"
@@ -208,8 +219,6 @@ export const Scene = () => {
         />
         <mesh
           name="ARQ"
-          castShadow
-          receiveShadow
           geometry={nodes.ARQ.geometry}
           material={materials.mt_background}
           scale={[1, 0.8, 1]}
@@ -265,6 +274,22 @@ export const Scene = () => {
           scale={[0.24, 0.356, 0.356]}
           onPointerOver={() => setIsHoverOn("DOOM")}
           onPointerOut={setIsHoverOff}
+          onClick={(e) => {
+            setScene({
+              cameraConfig: {
+                rotation: [0, 0, 0],
+                position: [2.3, 1.2, -1.6],
+              },
+              soundSrc: "/audio/doom.mp3",
+              quote:
+                "Playing doom! my therapy session, involves a shotgun and a lot demon-splattering",
+              interactMenu: {
+                previousTrack: false,
+                exit: true,
+                nextTrack: false,
+              },
+            });
+          }}
         />
         <mesh
           name="ultraman"
@@ -277,6 +302,22 @@ export const Scene = () => {
           scale={[0.24, 0.356, 0.356]}
           onPointerOver={() => setIsHoverOn("Ultraman")}
           onPointerOut={setIsHoverOff}
+          onClick={(e) => {
+            setScene({
+              cameraConfig: {
+                rotation: [0, Math.PI / 2, 0],
+                position: [-2.1, 1, -1.2],
+              },
+              soundSrc: "/audio/ultraman.mp3",
+              quote:
+                "Ultraman was my childhood icon, and deep down I'm still hoping for that glowing transformation whenever the world needs a hero!",
+              interactMenu: {
+                previousTrack: false,
+                exit: true,
+                nextTrack: false,
+              },
+            });
+          }}
         />
       </group>
     </group>

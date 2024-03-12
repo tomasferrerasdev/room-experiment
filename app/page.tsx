@@ -1,11 +1,9 @@
 "use client";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import styles from "./page.module.scss";
-import { PerspectiveCamera } from "@react-three/drei";
-import { BlendFunction } from "postprocessing";
-import { Suspense, useEffect } from "react";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import {
-  DotScreen,
   EffectComposer,
   Pixelation,
   Vignette,
@@ -31,14 +29,11 @@ export default function Home() {
         <Suspense fallback={null}>
           <Experience />
         </Suspense>
-        <ambientLight color={"#B3DEB2"} intensity={6} />
+        <CustomLights />
         <CustomCamera />
+        <CustomEffects />
         <Perf position="top-left" />
-        <EffectComposer>
-          <Pixelation granularity={1} />
-          <Vignette eskil={false} offset={0.2} darkness={1.2} />
-          <DotScreen scale={1} blendFunction={BlendFunction.LIGHTEN} />
-        </EffectComposer>
+        <gridHelper />
       </Canvas>
       <InteractionMenu />
       <Cursor />
@@ -50,41 +45,70 @@ const CustomCamera = () => {
   const { camera } = useThree();
   const { scene } = useSceneStore();
   const { positionX, positionY, positionZ } = useControls({
-    positionX: { value: 0, step: 0.1, min: -1.8, max: 0.9 },
-    positionY: { value: 1.4, step: 0.1 },
-    positionZ: { value: 3.3, step: 0.1 },
+    positionX: { value: 0, step: 0.1 },
+    positionY: { value: scene.cameraConfig.position[1], step: 0.1 },
+    positionZ: { value: scene.cameraConfig.position[2], step: 0.1 },
   });
 
   useEffect(() => {
     camera.position.set(positionX, positionY, positionZ);
   }, [camera, positionX, positionY, positionZ]);
 
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === "e") {
+      const { scene, setScene } = useSceneStore.getState();
+
+      if (scene.interactMenu.exit) {
+        setScene({
+          quote: "",
+          soundSrc: "",
+          cameraConfig: {
+            position: [0, 1.4, 4],
+            rotation: [0, 0, 0],
+          },
+          interactMenu: {
+            previousTrack: false,
+            exit: false,
+            nextTrack: false,
+          },
+        });
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <PerspectiveCamera
-      makeDefault
-      fov={40}
-      position={new THREE.Vector3(...scene.cameraConfig.position)}
-      rotation={new THREE.Euler(...scene.cameraConfig.lookAt)}
-    />
+    <>
+      <PerspectiveCamera
+        makeDefault
+        fov={35}
+        position={new THREE.Vector3(...scene.cameraConfig.position)}
+        rotation={[...scene.cameraConfig.rotation] as [number, number, number]}
+      />
+    </>
   );
 };
 
-// const WalkPath = () => {
-//   const LINE_NB_POINTS = 42;
-//   const curve = useMemo(() => {
-//     return new THREE.CatmullRomCurve3(
-//       [new THREE.Vector3(1, 0.2, -1.5), new THREE.Vector3(-2, 0.2, -1.5)],
-//       false,
-//       "catmullrom",
-//       0.5
-//     );
-//   }, []);
+const CustomEffects = () => {
+  return (
+    <EffectComposer>
+      <Pixelation granularity={3} />
+      <Vignette eskil={false} offset={0.1} darkness={1.2} />
+    </EffectComposer>
+  );
+};
 
-//   const linePoints = useMemo(() => {
-//     return curve.getPoints(LINE_NB_POINTS);
-//   }, [curve]);
-
-//   return (
-//     <Line points={linePoints} color={"white"} linewidth={6} lineWidth={6} />
-//   );
-// };
+const CustomLights = () => {
+  return (
+    <>
+      <ambientLight color={"#B3DEB2"} intensity={2} />
+      <pointLight color="orange" position={[1, 1, -1.8]} intensity={10} />
+    </>
+  );
+};
