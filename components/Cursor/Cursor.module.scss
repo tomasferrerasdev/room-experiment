@@ -1,0 +1,26 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  z-index: 90;
+  user-select: none;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .cursorMessage {
+    font-size: 14px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    span {
+      text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+        1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    }
+  }
+}
