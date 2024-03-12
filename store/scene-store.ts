@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type CameraType = {
   position: number[];
-  lookAt: number[];
+  rotation: number[];
 };
 
 type InteractMenuType = {
@@ -28,8 +28,8 @@ export const useSceneStore = create<SceneStore>((set) => ({
     quote: "",
     soundSrc: "",
     cameraConfig: {
-      position: [0, 1.4, 3.3],
-      lookAt: [0, 0, 0],
+      position: [0, 1.4, 4],
+      rotation: [0, 0, 0],
     },
     interactMenu: {
       previousTrack: false,
