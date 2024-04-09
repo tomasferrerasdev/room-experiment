@@ -1,55 +1,8 @@
 import { Line, useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export const Character = (props: any) => {
-  const [curPointIndex, setCurPointIndex] = useState(0);
-  const group = useRef<any>();
-  const { nodes, materials, animations }: any = useGLTF(
-    '/models/character.glb'
-  );
-  const { actions } = useAnimations(animations, group);
-  const [isMoving, setIsMoving] = useState(false);
-
-  useFrame((_state, delta) => {
-    const speed = isMoving ? 1 : 0.5; // Adjust the damping factor as needed
-    const distanceCovered = delta * speed;
-    const newPosition = curve.getPointAt(
-      (curPointIndex + distanceCovered) / LINE_NB_POINTS
-    );
-    group.current.position.lerp(newPosition, 0.1); // Adjust the lerp factor as needed
-  });
-
-  const handleMove = (event: KeyboardEvent) => {
-    if (event.key === 'ArrowLeft') {
-      setCurPointIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      actions['Common-Walking']?.play();
-      setIsMoving(true);
-      group.current.rotation.set(0, -Math.PI / 2, 0);
-    } else if (event.key === 'ArrowRight') {
-      setCurPointIndex((prevIndex) =>
-        Math.min(prevIndex + 1, linePoints.length - 1)
-      );
-      actions['Common-Walking']?.play();
-      setIsMoving(true);
-      group.current.rotation.set(0, Math.PI / 2, 0);
-    }
-  };
-
-  const handleStop = () => {
-    setIsMoving(false);
-  };
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleMove);
-    document.addEventListener('keyup', handleStop); // Add event listener for keyup
-    return () => {
-      document.removeEventListener('keydown', handleMove);
-      document.removeEventListener('keyup', handleStop); // Remove event listener on cleanup
-    };
-  }, []);
-
   const LINE_NB_POINTS = 160;
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
@@ -70,9 +23,119 @@ export const Character = (props: any) => {
     return curve.getPoints(LINE_NB_POINTS);
   }, [curve]);
 
+  const group = useRef<any>();
+  const { nodes, materials, animations }: any = useGLTF(
+    '/models/character.glb'
+  );
+  const { actions } = useAnimations(animations, group);
+  const [characterProgress, setCharacterProgress] = useState(
+    LINE_NB_POINTS / 2
+  );
+  const characterPosition = curve.getPointAt(
+    characterProgress / LINE_NB_POINTS
+  );
+  const [isMovingRight, setIsMovingRight] = useState(false);
+  const [isMovingLeft, setIsMovingLeft] = useState(false);
+  const movementInterval = useRef<number | null>(null);
+
+  console.log(actions);
+
+  useEffect(() => {
+    if (actions['Common-Idle']) {
+      actions['Common-Idle'].play();
+    }
+  }, [actions]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        if (actions['Common-Idle']) {
+          actions['Common-Idle'].stop();
+        }
+        if (actions['Common-Walking']) {
+          actions['Common-Walking'].play();
+        }
+      }
+      if (event.key === 'ArrowRight') {
+        setIsMovingRight(true);
+      } else if (event.key === 'ArrowLeft') {
+        setIsMovingLeft(true);
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        if (actions['Common-Walking']) {
+          actions['Common-Walking'].stop();
+        }
+        if (actions['Common-Idle']) {
+          actions['Common-Idle'].play();
+        }
+      }
+      if (event.key === 'ArrowRight') {
+        setIsMovingRight(false);
+      } else if (event.key === 'ArrowLeft') {
+        setIsMovingLeft(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMovingRight || isMovingLeft) {
+      movementInterval.current = window.setInterval(() => {
+        let nextPosition;
+        if (isMovingRight) {
+          nextPosition = Math.min(characterProgress + 1, LINE_NB_POINTS);
+
+          setCharacterProgress((prevProgress) =>
+            Math.min(prevProgress + 1, LINE_NB_POINTS)
+          );
+        } else if (isMovingLeft) {
+          nextPosition = Math.max(characterProgress - 1, 0);
+          setCharacterProgress((prevProgress) => Math.max(prevProgress - 1, 0));
+        }
+        if (nextPosition !== undefined) {
+          if (nextPosition > characterProgress) {
+            group.current.lookAt(
+              curve.getPointAt(nextPosition / LINE_NB_POINTS)
+            );
+            //console.log('Moving to a positive point on the line');
+          } else if (nextPosition < characterProgress) {
+            group.current.lookAt(
+              curve.getPointAt(nextPosition / LINE_NB_POINTS)
+            );
+            //console.log('Moving to a negative point on the line');
+          }
+        }
+      }, 30);
+    } else if (movementInterval.current) {
+      window.clearInterval(movementInterval.current);
+    }
+
+    return () => {
+      if (movementInterval.current) {
+        window.clearInterval(movementInterval.current);
+      }
+    };
+  }, [isMovingRight, isMovingLeft, characterProgress]);
+
   return (
     <>
-      <group ref={group} {...props} dispose={null} receiveShadow>
+      <group
+        ref={group}
+        {...props}
+        dispose={null}
+        receiveShadow
+        position={characterPosition}
+      >
         <group name="Scene">
           <group
             name="Armature"

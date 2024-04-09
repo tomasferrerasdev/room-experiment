@@ -1,6 +1,6 @@
-import { Scene } from "../Scene/Scene";
-import { Character } from "../Character/Character";
-import { Physics } from "@react-three/rapier";
+import { Physics } from '@react-three/rapier';
+import { Character } from '../Character/Character';
+import { Scene } from '../Scene/Scene';
 
 export const Experience = () => {
   return (

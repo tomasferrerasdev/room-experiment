@@ -1,18 +1,23 @@
-import { useEffect, useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
-import { useSceneCursor } from "@/store/scene-cursor";
-import { useSceneStore } from "@/store/scene-store";
+import { useSceneCursor } from '@/store/scene-cursor';
+import { useAnimations, useGLTF } from '@react-three/drei';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 export const Scene = () => {
   const group = useRef<any>();
-  const { nodes, materials, animations }: any = useGLTF("/models/scene.glb");
+  const { nodes, materials, animations }: any = useGLTF('/models/scene.glb');
   const { actions } = useAnimations(animations, group);
   const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
-  const { setScene } = useSceneStore();
 
   useEffect(() => {
-    actions["Cat-Clock-Loop"]?.play();
+    actions['Cat-Clock-Loop']?.play();
   }, []);
+
+  const basicMaterial = new THREE.MeshBasicMaterial();
+  basicMaterial.map = materials.mt_background.map;
+  basicMaterial.color = new THREE.Color(
+    materials.mt_background.color
+  ).multiplyScalar(0.5); // make color darker
 
   return (
     <group ref={group} dispose={null}>
@@ -22,24 +27,8 @@ export const Scene = () => {
           position={[0, 0.53, -3.819]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={0.003}
-          onPointerOver={() => setIsHoverOn("radio music player")}
+          onPointerOver={() => setIsHoverOn('radio music player')}
           onPointerOut={setIsHoverOff}
-          onClick={(e) => {
-            setScene({
-              cameraConfig: {
-                rotation: [0, 1.3, 0],
-                position: [-1.2, 0.9, -0.5],
-              },
-              soundSrc: "/audio/musicPlayer.mp3",
-              quote:
-                "Ready to dive into my life's playlist? Pick a track and some beats to this!",
-              interactMenu: {
-                previousTrack: true,
-                exit: true,
-                nextTrack: true,
-              },
-            });
-          }}
         >
           <group
             name="45f7aca418ac4ddd89c4a8cf16230b02fbx"
@@ -57,7 +46,7 @@ export const Scene = () => {
                   castShadow
                   receiveShadow
                   geometry={nodes.Radio_lowPoly_Versia_2_Material020_0.geometry}
-                  material={materials["Material.020"]}
+                  material={materials['Material.020']}
                   position={[-8.136, -10.039, 0.545]}
                   rotation={[0, 0, 1.252]}
                   scale={1.419}
@@ -90,10 +79,10 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Sm_BK_Wire_04.geometry}
-          material={materials["Material.002"]}
+          material={materials['Material.002']}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
-          onPointerOver={() => setIsHoverOn("wires")}
+          onPointerOver={() => setIsHoverOn('wires')}
           onPointerOut={setIsHoverOff}
         />
         <mesh
@@ -101,7 +90,7 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Sm_BK_Wire_03.geometry}
-          material={materials["Material.002"]}
+          material={materials['Material.002']}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
         />
@@ -110,7 +99,7 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Sm_BK_Wire_02.geometry}
-          material={materials["Material.002"]}
+          material={materials['Material.002']}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
         />
@@ -119,31 +108,11 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Sm_BK_Wire_01.geometry}
-          material={materials["Material.002"]}
+          material={materials['Material.002']}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
         />
-        <group
-          name="computer"
-          onPointerOver={() => setIsHoverOn("computer")}
-          onPointerOut={setIsHoverOff}
-          onClick={(e) => {
-            setScene({
-              cameraConfig: {
-                rotation: [-0.2, 0.4, 0],
-                position: [-0.9, 1.5, -2.1],
-              },
-              soundSrc: "/audio/doom.mp3",
-              quote:
-                "Playing doom! my therapy session, involves a shotgun and a lot demon-splattering",
-              interactMenu: {
-                previousTrack: false,
-                exit: true,
-                nextTrack: false,
-              },
-            });
-          }}
-        >
+        <group name="computer">
           <mesh
             name="SM_screen"
             castShadow
@@ -220,15 +189,15 @@ export const Scene = () => {
         <mesh
           name="ARQ"
           geometry={nodes.ARQ.geometry}
-          material={materials.mt_background}
+          material={basicMaterial}
           scale={[1, 0.8, 1]}
         />
         <mesh
           name="11_Nintendo"
           castShadow
           receiveShadow
-          geometry={nodes["11_Nintendo"].geometry}
-          material={materials["11_Nintendo"]}
+          geometry={nodes['11_Nintendo'].geometry}
+          material={materials['11_Nintendo']}
           rotation={[Math.PI, -0.82, Math.PI]}
           scale={0.004}
         />
@@ -240,7 +209,7 @@ export const Scene = () => {
           <skinnedMesh
             name="Cat002"
             geometry={nodes.Cat002.geometry}
-            material={materials["mt_cat.002"]}
+            material={materials['mt_cat.002']}
             skeleton={nodes.Cat002.skeleton}
           />
           <primitive object={nodes.Cat} />
@@ -250,7 +219,7 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Fridge_Door.geometry}
-          material={materials["mt_background.001"]}
+          material={materials['mt_background.001']}
           position={[-3.28, 1.493, -1.958]}
           scale={[1, 0.8, 1]}
         />
@@ -259,69 +228,13 @@ export const Scene = () => {
           castShadow
           receiveShadow
           geometry={nodes.Door.geometry}
-          material={materials["mt_background.001"]}
+          material={materials['mt_background.001']}
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
-        />
-        <mesh
-          name="doom"
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane.geometry}
-          material={materials["Material.001"]}
-          position={[2.312, 1.249, -2.971]}
-          rotation={[Math.PI / 2, 0, 0]}
-          scale={[0.24, 0.356, 0.356]}
-          onPointerOver={() => setIsHoverOn("DOOM")}
-          onPointerOut={setIsHoverOff}
-          onClick={(e) => {
-            setScene({
-              cameraConfig: {
-                rotation: [0, 0, 0],
-                position: [2.3, 1.2, -1.6],
-              },
-              soundSrc: "/audio/doom.mp3",
-              quote:
-                "Playing doom! my therapy session, involves a shotgun and a lot demon-splattering",
-              interactMenu: {
-                previousTrack: false,
-                exit: true,
-                nextTrack: false,
-              },
-            });
-          }}
-        />
-        <mesh
-          name="ultraman"
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane001.geometry}
-          material={materials["Material.003"]}
-          position={[-3.69, 1.091, -1.216]}
-          rotation={[Math.PI / 2, 0, -1.567]}
-          scale={[0.24, 0.356, 0.356]}
-          onPointerOver={() => setIsHoverOn("Ultraman")}
-          onPointerOut={setIsHoverOff}
-          onClick={(e) => {
-            setScene({
-              cameraConfig: {
-                rotation: [0, Math.PI / 2, 0],
-                position: [-2.1, 1, -1.2],
-              },
-              soundSrc: "/audio/ultraman.mp3",
-              quote:
-                "Ultraman was my childhood icon, and deep down I'm still hoping for that glowing transformation whenever the world needs a hero!",
-              interactMenu: {
-                previousTrack: false,
-                exit: true,
-                nextTrack: false,
-              },
-            });
-          }}
         />
       </group>
     </group>
   );
 };
 
-useGLTF.preload("/models/scene.glb");
+useGLTF.preload('/models/scene.glb');
