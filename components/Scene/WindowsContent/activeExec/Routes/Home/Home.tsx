@@ -11,9 +11,6 @@ export const Home = () => {
             <a href="">ABOUT</a>
           </li>
           <li>
-            <a href="">EXPERIENCE</a>
-          </li>
-          <li>
             <a href="">PROJECTS</a>
           </li>
           <li>

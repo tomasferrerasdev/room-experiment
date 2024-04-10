@@ -43,7 +43,13 @@ export const About = () => {
                 to New York, where I attended middle school, high school, and
                 college.
               </p>
-              <img src="/assets/windows/me.jpg" alt="tomas ferreras" />
+              <div>
+                <img src="/assets/windows/me.jpg" alt="tomas ferreras" />
+                <p className={styles.sub}>
+                  <sub>Figure 1:</sub>
+                  <span>A real photo of me developing this website :)</span>
+                </p>
+              </div>
               <p>
                 In 2017, I got accepted into Rennselear Polytechnic Institute to
                 study Computer Science. It was my first choice and I was
@@ -54,7 +60,16 @@ export const About = () => {
                 half, until the start of my senior year when I decided to focus
                 on other opportunities.
               </p>
-              <img src="/assets/windows/me_outdoor.jpg" alt="tomas ferreras" />
+              <div>
+                <img
+                  src="/assets/windows/me_outdoor.png"
+                  alt="tomas ferreras"
+                />
+                <p className={styles.sub}>
+                  <sub>Figure 2:</sub>
+                  <span>Taking a walk</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
   height: 100%;
 
   .sidebarHeader {
+    margin-bottom: 68px;
     p {
       font-size: 58px;
       line-height: 50px;
@@ -13,6 +14,39 @@
     span {
       font-family: var(--font-press-start);
       font-size: 20px;
+    }
+  }
+
+  nav {
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      width: 100%;
+      li {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        a {
+          font-family: var(--font-press-start);
+          font-size: 24px;
+        }
+
+        .marker {
+          width: 14px;
+          height: 14px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: rgb(85, 26, 139);
+          align-self: center;
+          border-radius: 50%;
+          margin-right: 6px;
+          text-decoration: none;
+        }
+      }
     }
   }
 }
