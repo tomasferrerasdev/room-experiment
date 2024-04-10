@@ -3,7 +3,7 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import styles from './Office.module.scss';
-import { WindowsContent } from './WindowsContent';
+import { WindowsContent } from './WindowsContent/WindowsContent';
 
 export const Office = () => {
   const group = useRef<any>();

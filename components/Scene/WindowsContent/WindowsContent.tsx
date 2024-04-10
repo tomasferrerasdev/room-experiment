@@ -1,8 +1,12 @@
-import styles from './Office.module.scss';
+import styles from './WindowsContent.module.scss';
+import { ActiveExec } from './activeExec/ActiveExec';
+import { Execs } from './execs/Execs';
 
 export const WindowsContent = () => {
   return (
     <div className={styles.container}>
+      <Execs />
+      <ActiveExec />
       <div className={styles.bottomBar}>
         <div className={styles.bottomBarContainer}>
           <img src="/assets/windows_logo.png" alt="windows 95" />

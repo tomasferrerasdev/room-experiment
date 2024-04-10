@@ -1,0 +1,18 @@
+.sidebar {
+  width: 380px;
+  height: 100%;
+
+  .sidebarHeader {
+    p {
+      font-size: 58px;
+      line-height: 50px;
+      font-family: var(--font-gastromond);
+      margin-bottom: 16px;
+    }
+
+    span {
+      font-family: var(--font-press-start);
+      font-size: 20px;
+    }
+  }
+}
