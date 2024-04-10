@@ -1,12 +1,12 @@
 import { Physics } from '@react-three/rapier';
 import { Character } from '../Character/Character';
-import { Scene } from '../Scene/Scene';
+import { Office } from '../Scene/Office';
 
 export const Experience = () => {
   return (
     <>
       <Physics>
-        <Scene />
+        <Office />
         <Character />
       </Physics>
     </>

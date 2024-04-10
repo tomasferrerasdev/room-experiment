@@ -8,7 +8,6 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
-import { Perf } from 'r3f-perf';
 import { Suspense } from 'react';
 import styles from './page.module.scss';
 
@@ -27,9 +26,6 @@ export default function Home() {
         </Suspense>
         <CustomLights />
         <CustomCamera />
-        <CustomEffects />
-        <Perf position="top-left" />
-        <gridHelper />
       </Canvas>
       <Cursor />
     </main>
@@ -37,12 +33,14 @@ export default function Home() {
 }
 
 const CustomCamera = () => {
+  //   position={[-1.7, 1.04, -4.8]}
+  //   position={[-0.1, 1.5, 3]} original
   return (
     <>
       <PerspectiveCamera
         makeDefault
         fov={45}
-        position={[-0.1, 1.5, 3]}
+        position={[-1.8, 1.04, -5.05]}
         rotation={[-0.04, 0, 0]}
       />
     </>
@@ -62,7 +60,7 @@ const CustomLights = () => {
   return (
     <>
       <ambientLight color={'#B3DEB2'} intensity={2} />
-      <pointLight color="orange" position={[1, 1, -1.8]} intensity={10} />
+      <pointLight color="orange" position={[1, 1, -1.8]} intensity={35} />
     </>
   );
 };

@@ -38,8 +38,6 @@ export const Character = (props: any) => {
   const [isMovingLeft, setIsMovingLeft] = useState(false);
   const movementInterval = useRef<number | null>(null);
 
-  console.log(actions);
-
   useEffect(() => {
     if (actions['Common-Idle']) {
       actions['Common-Idle'].play();
@@ -107,12 +105,10 @@ export const Character = (props: any) => {
             group.current.lookAt(
               curve.getPointAt(nextPosition / LINE_NB_POINTS)
             );
-            //console.log('Moving to a positive point on the line');
           } else if (nextPosition < characterProgress) {
             group.current.lookAt(
               curve.getPointAt(nextPosition / LINE_NB_POINTS)
             );
-            //console.log('Moving to a negative point on the line');
           }
         }
       }, 30);
@@ -126,6 +122,20 @@ export const Character = (props: any) => {
       }
     };
   }, [isMovingRight, isMovingLeft, characterProgress]);
+
+  useEffect(() => {
+    function handleKeyPress(event: KeyboardEvent) {
+      if (event.key === 'e' && characterProgress < 10) {
+        actions['The-Room-Open-Fridge']?.play();
+        actions['The-Room-Open-Fridge']!.repetitions = 1;
+      }
+    }
+
+    window.addEventListener('keypress', handleKeyPress);
+    return () => {
+      window.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [characterProgress]);
 
   return (
     <>
@@ -180,7 +190,7 @@ export const Character = (props: any) => {
           </group>
         </group>
       </group>
-      <Line points={linePoints} color={'white'} linewidth={3} lineWidth={3} />
+      <Line points={linePoints} opacity={0} linewidth={0} />
     </>
   );
 };
