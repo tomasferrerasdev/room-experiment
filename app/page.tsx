@@ -25,6 +25,7 @@ export default function Home() {
           <Experience />
         </Suspense>
         <CustomLights />
+        <CustomEffects />
         <CustomCamera />
       </Canvas>
       <Cursor />
@@ -33,15 +34,17 @@ export default function Home() {
 }
 
 const CustomCamera = () => {
-  //   position={[-1.7, 1.04, -4.8]}
-  //   position={[-0.1, 1.5, 3]} original
+  //position={[-0.1, 1.5, 3]} original
+
+  //  position={[-1.78, 1.035, -5.15]}
+  //  rotation={[-0.04, 0.19, 0.006]}
   return (
     <>
       <PerspectiveCamera
         makeDefault
         fov={45}
-        position={[-1.8, 1.04, -5.05]}
-        rotation={[-0.04, 0, 0]}
+        position={[-1.78, 1.035, -5.137]}
+        rotation={[-0.031, -0.02, 0]}
       />
     </>
   );

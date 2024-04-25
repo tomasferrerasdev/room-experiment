@@ -1,23 +1,25 @@
 import { useSceneCursor } from '@/store/scene-cursor';
-import { useAnimations, useGLTF } from '@react-three/drei';
+import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-export const Scene = () => {
+export const Room = () => {
   const group = useRef<any>();
-  const { nodes, materials, animations }: any = useGLTF('/models/scene.glb');
+  const screnMesh = useRef<any>();
+  const screenHtmlRef = useRef<any>();
+  const { nodes, materials, animations }: any = useGLTF('/models/final.glb');
   const { actions } = useAnimations(animations, group);
   const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
-
-  useEffect(() => {
-    actions['Cat-Clock-Loop']?.play();
-  }, []);
 
   const basicMaterial = new THREE.MeshBasicMaterial();
   basicMaterial.map = materials.mt_background.map;
   basicMaterial.color = new THREE.Color(
     materials.mt_background.color
-  ).multiplyScalar(0.5);
+  ).multiplyScalar(0.8);
+
+  useEffect(() => {
+    actions['Cat-Clock-Loop']?.play();
+  }, []);
 
   return (
     <group ref={group} dispose={null}>
@@ -29,7 +31,8 @@ export const Scene = () => {
           receiveShadow
           geometry={nodes.Table001.geometry}
           material={materials.mt_assets}
-          rotation={[Math.PI / 2, 0, 0]}
+          position={[-4.124, 0, -2.165]}
+          rotation={[Math.PI / 2, 0, 1.054]}
           scale={[1, 0.8, 1]}
         />
         <mesh
@@ -38,7 +41,8 @@ export const Scene = () => {
           receiveShadow
           geometry={nodes.Table.geometry}
           material={materials.mt_assets_mate}
-          rotation={[0, -0.472, 0]}
+          position={[-4.124, 0, -2.165]}
+          rotation={[0, -1.525, 0]}
           scale={[1, 1, 1.901]}
         />
         <mesh
@@ -49,8 +53,6 @@ export const Scene = () => {
           material={materials['Material.002']}
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
-          onPointerOver={() => setIsHoverOn('wires')}
-          onPointerOut={setIsHoverOff}
         />
         <mesh
           name="Sm_BK_Wire_03"
@@ -79,26 +81,6 @@ export const Scene = () => {
           rotation={[Math.PI / 2, 0, -0.442]}
           scale={2.254}
         />
-        <group name="computer">
-          <mesh
-            name="SM_screen"
-            castShadow
-            receiveShadow
-            geometry={nodes.SM_screen.geometry}
-            material={materials.Screen}
-            rotation={[-Math.PI, 0.639, -Math.PI]}
-            scale={[-0.232, -0.017, -0.232]}
-          />
-          <mesh
-            name="PC"
-            castShadow
-            receiveShadow
-            geometry={nodes.PC.geometry}
-            material={materials.mt_assets}
-            rotation={[-Math.PI, 0.639, -Math.PI]}
-            scale={[-0.232, -0.017, -0.232]}
-          />
-        </group>
         <mesh
           name="FRONT"
           castShadow
@@ -136,15 +118,6 @@ export const Scene = () => {
           scale={[1, 0.8, 1]}
         />
         <mesh
-          name="Assets001"
-          castShadow
-          receiveShadow
-          geometry={nodes.Assets001.geometry}
-          material={materials.mt_assets}
-          rotation={[Math.PI / 2, 0, 0]}
-          scale={[1, 0.8, 1]}
-        />
-        <mesh
           name="Assets"
           castShadow
           receiveShadow
@@ -155,18 +128,11 @@ export const Scene = () => {
         />
         <mesh
           name="ARQ"
+          castShadow
+          receiveShadow
           geometry={nodes.ARQ.geometry}
           material={basicMaterial}
           scale={[1, 0.8, 1]}
-        />
-        <mesh
-          name="11_Nintendo"
-          castShadow
-          receiveShadow
-          geometry={nodes['11_Nintendo'].geometry}
-          material={materials['11_Nintendo']}
-          rotation={[Math.PI, -0.82, Math.PI]}
-          scale={0.004}
         />
         <group
           name="Armature-Assets"
@@ -199,9 +165,59 @@ export const Scene = () => {
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
         />
+        <group
+          name="Sketchfab_model"
+          position={[-1.698, 0.824, -5.39]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={0.007}
+          onPointerOver={() => setIsHoverOn('computer')}
+          onPointerOut={setIsHoverOff}
+        >
+          <group
+            name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
+            rotation={[Math.PI / 2, 0, 0]}
+          >
+            <group name="RootNode">
+              <group
+                name="retro_computer_setup"
+                rotation={[-Math.PI / 2, 0, 0]}
+              >
+                <mesh
+                  name="retro_computer_setup_retro_computer_setup_Mat_0"
+                  castShadow
+                  receiveShadow
+                  geometry={
+                    nodes.retro_computer_setup_retro_computer_setup_Mat_0
+                      .geometry
+                  }
+                  material={materials.retro_computer_setup_Mat}
+                  position={[11.074, -5.591, 0]}
+                  rotation={[0, 0, -0.184]}
+                  ref={screnMesh}
+                >
+                  <Html
+                    rotation-x={Math.PI / 2 - 0.08}
+                    rotation-z={0.015}
+                    rotation-y={0.186}
+                    position={[-22.9, 9.16, 28.9]}
+                    transform
+                  >
+                    <iframe
+                      src="http://localhost:3001/"
+                      style={{
+                        width: '1580px',
+                        height: '1380px',
+                      }}
+                    ></iframe>
+                  </Html>
+                </mesh>
+              </group>
+            </group>
+          </group>
+        </group>
       </group>
     </group>
   );
 };
 
-useGLTF.preload('/models/scene.glb');
+useGLTF.preload('/models/final.glb');
