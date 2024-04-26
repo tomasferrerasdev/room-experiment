@@ -7,7 +7,7 @@ export const Room = () => {
   const group = useRef<any>();
   const screnMesh = useRef<any>();
   const screenHtmlRef = useRef<any>();
-  const { nodes, materials, animations }: any = useGLTF('/models/final.glb');
+  const { nodes, materials, animations }: any = useGLTF('/models/room.glb');
   const { actions } = useAnimations(animations, group);
   const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
 
@@ -170,8 +170,6 @@ export const Room = () => {
           position={[-1.698, 0.824, -5.39]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={0.007}
-          onPointerOver={() => setIsHoverOn('computer')}
-          onPointerOut={setIsHoverOff}
         >
           <group
             name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
@@ -191,33 +189,37 @@ export const Room = () => {
                       .geometry
                   }
                   material={materials.retro_computer_setup_Mat}
-                  position={[11.074, -5.591, 0]}
+                  position={[32.742, 2008.411, 0.001]}
                   rotation={[0, 0, -0.184]}
-                  ref={screnMesh}
-                >
-                  <Html
-                    rotation-x={Math.PI / 2 - 0.08}
-                    rotation-z={0.015}
-                    rotation-y={0.186}
-                    position={[-22.9, 9.16, 28.9]}
-                    transform
-                  >
-                    <iframe
-                      src="http://localhost:3001/"
-                      style={{
-                        width: '1580px',
-                        height: '1380px',
-                      }}
-                    ></iframe>
-                  </Html>
-                </mesh>
+                />
               </group>
             </group>
           </group>
         </group>
+
+        <mesh
+          name="screen"
+          castShadow
+          receiveShadow
+          geometry={nodes.screen.geometry}
+          material={materials['Material.001']}
+          position={[-1.62, 1.026, -5.451]}
+          rotation={[-1.65, 0, 0]}
+          scale={[0.141, 0.132, 0.123]}
+        >
+          <Html rotation-x={Math.PI / 2} transform scale={[0.051, 0.058, 0.06]}>
+            <iframe
+              src="http://localhost:3001/"
+              style={{
+                width: '1580px',
+                height: '1380px',
+              }}
+            ></iframe>
+          </Html>
+        </mesh>
       </group>
     </group>
   );
 };
 
-useGLTF.preload('/models/final.glb');
+useGLTF.preload('/models/room.glb');
