@@ -5,8 +5,6 @@ import * as THREE from 'three';
 
 export const Room = () => {
   const group = useRef<any>();
-  const screnMesh = useRef<any>();
-  const screenHtmlRef = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF('/models/room.glb');
   const { actions } = useAnimations(animations, group);
   const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
@@ -202,7 +200,6 @@ export const Room = () => {
           castShadow
           receiveShadow
           geometry={nodes.screen.geometry}
-          material={materials['Material.001']}
           position={[-1.62, 1.026, -5.451]}
           rotation={[-1.65, 0, 0]}
           scale={[0.141, 0.132, 0.123]}
