@@ -1,4 +1,6 @@
+import { useCameraStore } from '@/store/camera-store';
 import { Line, useAnimations, useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -7,8 +9,8 @@ export const Character = (props: any) => {
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
       [
-        new THREE.Vector3(-2.7, 0, -2.2),
-        new THREE.Vector3(-2, 0, -2.2),
+        new THREE.Vector3(-1.5, 0, -4),
+        new THREE.Vector3(-1.5, 0, -2.2),
         new THREE.Vector3(0, 0, -1.5),
         new THREE.Vector3(1, 0, -1.5),
         new THREE.Vector3(1.5, 0, -2),
@@ -63,6 +65,7 @@ export const Character = (props: any) => {
 
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        actions['The-Room-Desk-Code']!.stop();
         if (actions['Common-Walking']) {
           actions['Common-Walking'].stop();
         }
@@ -123,19 +126,46 @@ export const Character = (props: any) => {
     };
   }, [isMovingRight, isMovingLeft, characterProgress]);
 
-  useEffect(() => {
-    function handleKeyPress(event: KeyboardEvent) {
-      if (event.key === 'e' && characterProgress < 10) {
-        actions['The-Room-Open-Fridge']?.play();
-        actions['The-Room-Open-Fridge']!.repetitions = 1;
+  const [animate, setAnimate] = useState(false);
+  const [cameraTransition, setCameraTransition] = useState(false);
+  const { setEpsilon } = useCameraStore();
+  useFrame((state) => {
+    if (animate) {
+      if (characterProgress > 0) {
+        setCharacterProgress((prevProgress) => {
+          const nextProgress = Math.max(prevProgress - 0.5, 0);
+          group.current.lookAt(curve.getPointAt(nextProgress / LINE_NB_POINTS));
+          return nextProgress;
+        });
+        actions['Common-Walking']!.play();
+      } else {
+        actions['Common-Walking']!.stop();
+        actions['The-Room-Desk-Code']!.play();
+        setAnimate(false);
       }
     }
 
-    window.addEventListener('keypress', handleKeyPress);
-    return () => {
-      window.removeEventListener('keypress', handleKeyPress);
-    };
-  }, [characterProgress]);
+    if (cameraTransition) {
+      const elapsedTime = state.clock.getElapsedTime();
+      const targetPosition = new THREE.Vector3(-1.63, 1.035, -4.74);
+      const epsilon = 0.01;
+
+      state.camera.position.lerp(
+        new THREE.Vector3(-0.1, 1.5, 3).lerp(
+          new THREE.Vector3(-1.63, 1.035, -4.767),
+          elapsedTime * 0.08
+        ),
+        0.1
+      );
+
+      if (state.camera.position.distanceTo(targetPosition) < 1.4) {
+        setEpsilon(true);
+      }
+      if (state.camera.position.distanceTo(targetPosition) < epsilon) {
+        setCameraTransition(false);
+      }
+    }
+  });
 
   return (
     <>
@@ -145,6 +175,10 @@ export const Character = (props: any) => {
         dispose={null}
         receiveShadow
         position={characterPosition}
+        onClick={() => {
+          setAnimate(true);
+          setCameraTransition(true);
+        }}
       >
         <group name="Scene">
           <group
@@ -190,9 +224,7 @@ export const Character = (props: any) => {
           </group>
         </group>
       </group>
-      <Line points={linePoints} opacity={0} linewidth={0} />
+      <Line points={linePoints} opacity={0} linewidth={1} />
     </>
   );
 };
-
-useGLTF.preload('/models/character.glb');

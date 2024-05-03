@@ -1,6 +1,8 @@
 'use client';
 import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
+import { useCameraStore } from '@/store/camera-store';
+import { useSceneCursor } from '@/store/scene-cursor';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
@@ -12,6 +14,8 @@ import { Suspense } from 'react';
 import styles from './page.module.scss';
 
 export default function Home() {
+  const { media } = useSceneCursor();
+
   return (
     <main className={styles.main}>
       <Canvas
@@ -29,24 +33,20 @@ export default function Home() {
         <CustomCamera />
       </Canvas>
       <Cursor />
+      <p className={styles.subtitle}>{media.subtitle && media.subtitle}</p>
     </main>
   );
 }
 
 const CustomCamera = () => {
-  // position={[-1.63, 1.035, -5.138]}
-  // rotation={[-0.031, -0, 0]}
-
-  //  position={[-1.78, 1.035, -5.15]}
-  //  rotation={[-0.04, 0.19, 0.006]}
-
+  const { position } = useCameraStore();
   return (
     <>
       <PerspectiveCamera
         makeDefault
-        fov={45}
-        position={[-1.63, 1.035, -5.138]}
-        rotation={[-0.031, -0, 0]}
+        fov={50}
+        position={position}
+        rotation={[-0.031, 0, 0]}
       />
     </>
   );
@@ -55,7 +55,7 @@ const CustomCamera = () => {
 const CustomEffects = () => {
   return (
     <EffectComposer>
-      <Pixelation granularity={3} />
+      <Pixelation granularity={4} />
       <Vignette eskil={false} offset={0.1} darkness={1} />
     </EffectComposer>
   );

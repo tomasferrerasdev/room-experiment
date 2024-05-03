@@ -1,14 +1,16 @@
+import { useCameraStore } from '@/store/camera-store';
 import { useSceneCursor } from '@/store/scene-cursor';
-import { Html, useAnimations, useGLTF } from '@react-three/drei';
+import { Html, useAnimations, useGLTF, useTexture } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export const Room = () => {
   const group = useRef<any>();
+  const texture = useTexture('/assets/windows/window_screenshot.png');
   const { nodes, materials, animations }: any = useGLTF('/models/room.glb');
   const { actions } = useAnimations(animations, group);
-  const { setIsHoverOn, setIsHoverOff } = useSceneCursor();
-
+  const { setIsHoverOn, setIsHoverOff, setMedia } = useSceneCursor();
+  const { epsilon } = useCameraStore();
   const basicMaterial = new THREE.MeshBasicMaterial();
   basicMaterial.map = materials.mt_background.map;
   basicMaterial.color = new THREE.Color(
@@ -89,15 +91,6 @@ export const Room = () => {
           scale={[2.151, 2.241, 1.21]}
         />
         <mesh
-          name="Cone"
-          castShadow
-          receiveShadow
-          geometry={nodes.Cone.geometry}
-          material={materials.mtl_portal}
-          rotation={[-1.736, 0.016, -0.169]}
-          scale={[0.706, 3.672, 1.325]}
-        />
-        <mesh
           name="Box"
           castShadow
           receiveShadow
@@ -153,6 +146,14 @@ export const Room = () => {
           material={materials['mt_background.001']}
           position={[-3.28, 1.493, -1.958]}
           scale={[1, 0.8, 1]}
+          onPointerOver={() => setIsHoverOn('Doom')}
+          onPointerLeave={() => setIsHoverOff()}
+          onClick={() => {
+            setMedia(
+              "Playing Doom! My therapy session – because sometimes all you need is a shotgun and some demon-splattering. Let's go to the computer and unleash the chaos on the screen!",
+              '/audio/doom.mp3'
+            );
+          }}
         />
         <mesh
           name="Door"
@@ -162,12 +163,31 @@ export const Room = () => {
           material={materials['mt_background.001']}
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
+          onPointerOver={() => setIsHoverOn('go to the park')}
+          onPointerLeave={() => setIsHoverOff()}
+          onClick={() => {
+            setMedia(
+              'Visiting the park is like hitting the refresh button for your mood, with nature providing the best Wi-Fi connection for the soul.',
+              '/audio/park.mp3'
+            );
+          }}
         />
+
         <group
           name="Sketchfab_model"
-          position={[-1.698, 0.824, -5.39]}
+          position={[-1.698, 0.824, -5]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={0.007}
+          onPointerOver={() =>
+            setIsHoverOn('turn on computer (portfolio and more)')
+          }
+          onPointerLeave={() => setIsHoverOff()}
+          onClick={() => {
+            setMedia(
+              'Computers are like air conditioning, they work fine until you start opening windows.',
+              '/audio/computer.mp3'
+            );
+          }}
         >
           <group
             name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
@@ -200,11 +220,20 @@ export const Room = () => {
           castShadow
           receiveShadow
           geometry={nodes.screen.geometry}
-          position={[-1.62, 1.026, -5.451]}
-          rotation={[-1.65, 0, 0]}
+          position={[-1.62, 1.0262, -5.06]}
+          rotation={[-0.08, 0, 0]}
           scale={[0.141, 0.132, 0.123]}
         >
-          <Html rotation-x={Math.PI / 2} transform scale={[0.051, 0.058, 0.06]}>
+          <planeGeometry attach="geometry" args={[2, 2]} />
+          <meshBasicMaterial map={texture} />
+
+          <Html
+            rotation-x={0}
+            transform
+            scale={[0.051, 0.054, 0.06]}
+            occlude
+            position={[0, 0, epsilon ? 0.01 : -0.01]}
+          >
             <iframe
               src="http://localhost:3001/"
               style={{
