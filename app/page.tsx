@@ -1,16 +1,17 @@
 'use client';
 import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
-import { useCameraStore } from '@/store/camera-store';
 import { useSceneCursor } from '@/store/scene-cursor';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
+  Bloom,
   EffectComposer,
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
 import { Suspense } from 'react';
+import * as THREE from 'three';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -29,8 +30,8 @@ export default function Home() {
           <Experience />
         </Suspense>
         <CustomLights />
-        <CustomEffects />
         <CustomCamera />
+        <CustomEffects />
       </Canvas>
       <Cursor />
       <p className={styles.subtitle}>{media.subtitle && media.subtitle}</p>
@@ -39,24 +40,27 @@ export default function Home() {
 }
 
 const CustomCamera = () => {
-  const { position } = useCameraStore();
   return (
     <>
       <PerspectiveCamera
         makeDefault
         fov={50}
-        position={position}
-        rotation={[-0.031, 0, 0]}
+        position={new THREE.Vector3(-0.1, 1.5, 3)}
       />
     </>
   );
 };
-
 const CustomEffects = () => {
   return (
     <EffectComposer>
       <Pixelation granularity={4} />
       <Vignette eskil={false} offset={0.1} darkness={1} />
+      <Bloom
+        luminanceThreshold={0}
+        mipmapBlur
+        luminanceSmoothing={0}
+        intensity={0.1}
+      />
     </EffectComposer>
   );
 };
@@ -64,8 +68,8 @@ const CustomEffects = () => {
 const CustomLights = () => {
   return (
     <>
-      <ambientLight color={'#B3DEB2'} intensity={2} />
-      <pointLight color="orange" position={[1, 1, -1.8]} intensity={35} />
+      <ambientLight color={'#B3DEB2'} intensity={0.4} />
+      <pointLight color="orange" position={[0.8, 1.7, -2.5]} intensity={8} />
     </>
   );
 };

@@ -1,6 +1,5 @@
-import { useCameraStore } from '@/store/camera-store';
 import { Line, useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -9,12 +8,13 @@ export const Character = (props: any) => {
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
       [
-        new THREE.Vector3(-1.5, 0, -4),
-        new THREE.Vector3(-1.5, 0, -2.2),
-        new THREE.Vector3(0, 0, -1.5),
+        new THREE.Vector3(-1.1, 0, -3.6),
+        new THREE.Vector3(-0.5, 0, -3.2),
+        new THREE.Vector3(-0.5, 0, -2),
+        new THREE.Vector3(-0, 0, -1.5),
         new THREE.Vector3(1, 0, -1.5),
         new THREE.Vector3(1.5, 0, -2),
-        new THREE.Vector3(1.6, 0, -2.8),
+        new THREE.Vector3(1.6, 0, -2.7),
       ],
       false,
       'catmullrom'
@@ -127,8 +127,21 @@ export const Character = (props: any) => {
   }, [isMovingRight, isMovingLeft, characterProgress]);
 
   const [animate, setAnimate] = useState(false);
-  const [cameraTransition, setCameraTransition] = useState(false);
-  const { setEpsilon } = useCameraStore();
+  const { camera } = useThree();
+  const targetPosition = new THREE.Vector3(
+    -1.5749229568578915,
+    1.0515006374954137,
+    -3.7144349607085867
+  );
+  const targetRotation = new THREE.Quaternion().setFromEuler(
+    new THREE.Euler(
+      -0.3237341897063717,
+      1.3240036553827648,
+      0.31456861597100505,
+      'XYZ'
+    )
+  );
+
   useFrame((state) => {
     if (animate) {
       if (characterProgress > 0) {
@@ -141,28 +154,10 @@ export const Character = (props: any) => {
       } else {
         actions['Common-Walking']!.stop();
         actions['The-Room-Desk-Code']!.play();
-        setAnimate(false);
-      }
-    }
-
-    if (cameraTransition) {
-      const elapsedTime = state.clock.getElapsedTime();
-      const targetPosition = new THREE.Vector3(-1.63, 1.035, -4.74);
-      const epsilon = 0.01;
-
-      state.camera.position.lerp(
-        new THREE.Vector3(-0.1, 1.5, 3).lerp(
-          new THREE.Vector3(-1.63, 1.035, -4.767),
-          elapsedTime * 0.08
-        ),
-        0.1
-      );
-
-      if (state.camera.position.distanceTo(targetPosition) < 1.4) {
-        setEpsilon(true);
-      }
-      if (state.camera.position.distanceTo(targetPosition) < epsilon) {
-        setCameraTransition(false);
+        setTimeout(() => {
+          camera.position.lerp(targetPosition, 0.02);
+          camera.quaternion.copy(camera.quaternion.slerp(targetRotation, 0.02));
+        }, 2000);
       }
     }
   });
@@ -177,7 +172,6 @@ export const Character = (props: any) => {
         position={characterPosition}
         onClick={() => {
           setAnimate(true);
-          setCameraTransition(true);
         }}
       >
         <group name="Scene">

@@ -5,6 +5,8 @@ interface State {
   setEpsilon: (epsilon: boolean) => void;
   position: THREE.Vector3;
   setPosition: (newPos: THREE.Vector3) => void;
+  rotation: THREE.Quaternion;
+  setRotation: (newRot: THREE.Quaternion) => void;
 }
 
 export const useCameraStore = create<State>()((set) => ({
@@ -15,5 +17,9 @@ export const useCameraStore = create<State>()((set) => ({
   },
   setEpsilon(epsilon) {
     set({ epsilon });
+  },
+  rotation: new THREE.Quaternion(-0.02, 0, 0),
+  setRotation(newRot) {
+    set({ rotation: newRot });
   },
 }));
