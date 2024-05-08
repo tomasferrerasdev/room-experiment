@@ -1,5 +1,5 @@
 import { Line, useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -127,20 +127,6 @@ export const Character = (props: any) => {
   }, [isMovingRight, isMovingLeft, characterProgress]);
 
   const [animate, setAnimate] = useState(false);
-  const { camera } = useThree();
-  const targetPosition = new THREE.Vector3(
-    -1.5749229568578915,
-    1.0515006374954137,
-    -3.7144349607085867
-  );
-  const targetRotation = new THREE.Quaternion().setFromEuler(
-    new THREE.Euler(
-      -0.3237341897063717,
-      1.3240036553827648,
-      0.31456861597100505,
-      'XYZ'
-    )
-  );
 
   useFrame((state) => {
     if (animate) {
@@ -154,10 +140,6 @@ export const Character = (props: any) => {
       } else {
         actions['Common-Walking']!.stop();
         actions['The-Room-Desk-Code']!.play();
-        setTimeout(() => {
-          camera.position.lerp(targetPosition, 0.02);
-          camera.quaternion.copy(camera.quaternion.slerp(targetRotation, 0.02));
-        }, 2000);
       }
     }
   });

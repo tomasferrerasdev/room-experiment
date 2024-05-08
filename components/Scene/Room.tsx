@@ -1,4 +1,5 @@
 import { useSceneCursor } from '@/store/scene-cursor';
+import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
@@ -21,7 +22,8 @@ export const Room = () => {
   material.color = new THREE.Color(
     materials['mt_background.002'].color
   ).multiplyScalar(0.8);
-
+  const { animateCamera, setAnimateCamera, isReverse, setIsReverse } =
+    useCameraAnimation();
   return (
     <group ref={group} dispose={null}>
       <group name="Scene">
@@ -172,6 +174,12 @@ export const Room = () => {
           position={[-1.806, 0.824, -3.695]}
           rotation={[-Math.PI / 2, 0, 1.35]}
           scale={0.007}
+          onClick={() => {
+            if (!animateCamera) {
+              setAnimateCamera(true);
+              setIsReverse(!isReverse);
+            }
+          }}
         >
           <group
             name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
@@ -211,10 +219,10 @@ export const Room = () => {
             transform
             rotation={[Math.PI / 2, 0, 0]}
             wrapperClass={styles.html}
-            distanceFactor={0.62}
+            distanceFactor={0.67}
             prepend={false}
           >
-            <iframe src="http://localhost:3001/"></iframe>
+            <iframe src="https://tomasferreras-os.netlify.app/"></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />
         </mesh>
