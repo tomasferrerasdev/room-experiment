@@ -1,3 +1,4 @@
 .next
 dist
 node_modules
+**/components/Menu/Menu.tsx

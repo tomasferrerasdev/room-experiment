@@ -1,12 +1,12 @@
-import { Scene } from "../Scene/Scene";
-import { Character } from "../Character/Character";
-import { Physics } from "@react-three/rapier";
+import { Physics } from '@react-three/rapier';
+import { Character } from '../Character/Character';
+import { Room } from '../Scene/Room';
 
 export const Experience = () => {
   return (
     <>
       <Physics>
-        <Scene />
+        <Room />
         <Character />
       </Physics>
     </>
