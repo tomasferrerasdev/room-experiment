@@ -8,12 +8,7 @@ export function useCameraAnimation() {
   const [animateCamera, setAnimateCamera] = useState(false);
   const targetPosition = new THREE.Vector3(-1.56, 1.048, -3.7144349607085867);
   const targetRotation = new THREE.Quaternion().setFromEuler(
-    new THREE.Euler(
-      -0.3237341897063717,
-      1.3240036553827648,
-      0.31456861597100505,
-      'XYZ'
-    )
+    new THREE.Euler(-0.335, 1.28, 0.32, 'XYZ')
   );
 
   useFrame((state) => {
