@@ -146,7 +146,6 @@ export const Character = (props: any) => {
         actions['Common-Walking']!.stop();
         actions['The-Room-Desk-Code']!.play();
         window.addEventListener('keydown', handleKeyPress);
-      } else {
       }
     }
 
