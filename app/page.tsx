@@ -2,7 +2,7 @@
 import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
 import { useSceneCursor } from '@/store/scene-cursor';
-import { PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
   Bloom,
@@ -10,7 +10,6 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
-import { Perf } from 'r3f-perf';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
@@ -32,7 +31,6 @@ export default function Home() {
         <CustomLights />
         <CustomCamera />
         <CustomEffects />
-        <Perf />
       </Canvas>
       <Cursor />
       <p className={styles.subtitle}>{media.subtitle && media.subtitle}</p>
@@ -43,6 +41,7 @@ export default function Home() {
 const CustomCamera = () => {
   return (
     <>
+      <OrbitControls />
       <PerspectiveCamera
         makeDefault
         fov={50}
