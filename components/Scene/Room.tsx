@@ -1,5 +1,3 @@
-import { useSceneCursor } from '@/store/scene-cursor';
-import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
@@ -11,19 +9,17 @@ export const Room = () => {
   const group = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF('/models/room_2.glb');
   const { actions } = useAnimations(animations, group);
-  const { setIsHoverOn, setIsHoverOff, setMedia } = useSceneCursor();
 
   useEffect(() => {
     actions['Cat-Clock-Loop']?.play();
-  }, []);
+  }, [actions]);
 
   const material = new THREE.MeshPhongMaterial({ shininess: 10 });
   material.map = materials['mt_background.002'].map;
   material.color = new THREE.Color(
     materials['mt_background.002'].color
   ).multiplyScalar(0.8);
-  const { animateCamera, setAnimateCamera, isReverse, setIsReverse } =
-    useCameraAnimation();
+
   return (
     <group ref={group} dispose={null}>
       <group name="Scene">
@@ -174,12 +170,6 @@ export const Room = () => {
           position={[-1.806, 0.824, -3.695]}
           rotation={[-Math.PI / 2, 0, 1.35]}
           scale={0.007}
-          onClick={() => {
-            if (!animateCamera) {
-              setAnimateCamera(true);
-              setIsReverse(!isReverse);
-            }
-          }}
         >
           <group
             name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
@@ -217,12 +207,12 @@ export const Room = () => {
         >
           <Html
             transform
-            rotation={[Math.PI / 2, 0, 0]}
+            rotation={[Math.PI / 2, -0.03, 0]}
             wrapperClass={styles.html}
             distanceFactor={0.67}
             prepend={false}
           >
-            <iframe src="https://tomasferreras-os.netlify.app/"></iframe>
+            <iframe src="http://localhost:3001/"></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />
         </mesh>
