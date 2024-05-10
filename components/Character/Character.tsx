@@ -50,7 +50,6 @@ export const Character = (props: any) => {
     if (actions['Common-Idle']) {
       actions['Common-Idle'].play();
     }
-    console.log(actions);
   }, [actions]);
 
   useEffect(() => {
@@ -113,14 +112,16 @@ export const Character = (props: any) => {
       movementInterval.current = window.setInterval(() => {
         let nextPosition;
         if (isMovingRight) {
-          nextPosition = Math.min(characterProgress + 1, LINE_NB_POINTS);
+          nextPosition = Math.min(characterProgress + 1.7, LINE_NB_POINTS);
 
           setCharacterProgress((prevProgress) =>
-            Math.min(prevProgress + 1, LINE_NB_POINTS)
+            Math.min(prevProgress + 1.7, LINE_NB_POINTS)
           );
         } else if (isMovingLeft) {
-          nextPosition = Math.max(characterProgress - 1, 0);
-          setCharacterProgress((prevProgress) => Math.max(prevProgress - 1, 0));
+          nextPosition = Math.max(characterProgress - 1.7, 0);
+          setCharacterProgress((prevProgress) =>
+            Math.max(prevProgress - 1.7, 0)
+          );
         }
         if (nextPosition !== undefined) {
           if (nextPosition > characterProgress) {

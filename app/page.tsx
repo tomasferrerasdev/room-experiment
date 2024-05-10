@@ -10,10 +10,10 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
+import { Perf } from 'r3f-perf';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
-
 export default function Home() {
   const { media } = useSceneCursor();
 
@@ -32,6 +32,7 @@ export default function Home() {
         <CustomLights />
         <CustomCamera />
         <CustomEffects />
+        <Perf />
       </Canvas>
       <Cursor />
       <p className={styles.subtitle}>{media.subtitle && media.subtitle}</p>
@@ -45,7 +46,7 @@ const CustomCamera = () => {
       <PerspectiveCamera
         makeDefault
         fov={50}
-        position={new THREE.Vector3(-0.1, 1.5, 3)}
+        position={new THREE.Vector3(-0.1, 1.3, 3)}
       />
     </>
   );
