@@ -26,6 +26,7 @@ export const Cursor = () => {
             width={46}
             height={46}
             alt="eye gif cursor"
+            priority
           />
           {hoverMessage && (
             <div className={styles.cursorMessage}>
@@ -39,6 +40,7 @@ export const Cursor = () => {
           width={40}
           height={40}
           alt="pointer cursor"
+          priority
         />
       )}
     </div>
