@@ -2,7 +2,7 @@
 import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
 import { useSceneCursor } from '@/store/scene-cursor';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
   Bloom,
@@ -41,7 +41,6 @@ export default function Home() {
 const CustomCamera = () => {
   return (
     <>
-      <OrbitControls />
       <PerspectiveCamera
         makeDefault
         fov={50}

@@ -1,4 +1,10 @@
-import { Html, useAnimations, useGLTF } from '@react-three/drei';
+import {
+  Html,
+  Plane,
+  useAnimations,
+  useGLTF,
+  useTexture,
+} from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
@@ -9,6 +15,7 @@ export const Room = () => {
   const group = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF('/models/room_2.glb');
   const { actions } = useAnimations(animations, group);
+  const texture = useTexture('/assets/doom.jpg');
 
   useEffect(() => {
     actions['Cat-Clock-Loop']?.play();
@@ -165,6 +172,13 @@ export const Room = () => {
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
         />
+        <Plane
+          args={[0.5, 0.7]}
+          position={[0.9, 1.3, -2.97]}
+          rotation={[0, 0, 0]}
+        >
+          <meshStandardMaterial attach="material" map={texture} />
+        </Plane>
         <group
           name="Sketchfab_model001"
           position={[-1.806, 0.824, -3.695]}

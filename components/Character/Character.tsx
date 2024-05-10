@@ -1,4 +1,3 @@
-import { useSceneCursor } from '@/store/scene-cursor';
 import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, Line, useAnimations, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
@@ -6,7 +5,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export const Character = (props: any) => {
-  const { setMedia } = useSceneCursor();
   const { animateCamera, setAnimateCamera, setIsReverse } =
     useCameraAnimation();
   const LINE_NB_POINTS = 160;
@@ -162,7 +160,6 @@ export const Character = (props: any) => {
     characterProgress,
     actions,
     curve,
-    setMedia,
     animateCamera,
     setIsReverse,
     setAnimateCamera,

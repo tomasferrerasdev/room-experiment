@@ -11,10 +11,9 @@ interface State {
   media: Media;
   setIsHoverOn: (message: string) => void;
   setIsHoverOff: () => void;
-  setMedia: (subtitle: string, audioSrc: string) => void;
 }
 
-export const useSceneCursor = create<State>()((set) => ({
+export const useSceneCursor = create<State>()((set, get) => ({
   isHover: false,
   hoverMessage: null,
   media: {
@@ -24,12 +23,4 @@ export const useSceneCursor = create<State>()((set) => ({
   setIsHoverOn: (message) =>
     set((state) => ({ isHover: true, hoverMessage: message })),
   setIsHoverOff: () => set((state) => ({ isHover: false, hoverMessage: null })),
-  setMedia: (subtitle, audioSrc) => {
-    const audio = new Audio(audioSrc);
-    audio.play();
-    set((state) => ({ media: { subtitle, audio } }));
-    audio.onended = () => {
-      set((state) => ({ media: { subtitle: null, audio: null } }));
-    };
-  },
 }));
