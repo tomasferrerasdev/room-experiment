@@ -212,7 +212,7 @@ export const Room = () => {
             distanceFactor={0.67}
             prepend={false}
           >
-            <iframe src="http://localhost:3001/"></iframe>
+            <iframe src="https://tomasferreras-os.netlify.app/"></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />
         </mesh>
