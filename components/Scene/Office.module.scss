@@ -1,5 +1,7 @@
 .html iframe {
-  width: 1200px;
+  position: relative;
+  width: 1370px;
   height: 1200px;
   border-radius: 4px;
+  overflow: hidden;
 }

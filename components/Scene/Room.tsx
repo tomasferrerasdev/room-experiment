@@ -1,3 +1,4 @@
+import { useLoadingStore } from '@/store/loading-store';
 import {
   Html,
   Plane,
@@ -16,6 +17,7 @@ export const Room = () => {
   const { nodes, materials, animations }: any = useGLTF('/models/room_2.glb');
   const { actions } = useAnimations(animations, group);
   const texture = useTexture('/assets/doom.jpg');
+  const { setIsLoaded } = useLoadingStore();
 
   useEffect(() => {
     actions['Cat-Clock-Loop']?.play();
@@ -29,6 +31,15 @@ export const Room = () => {
 
   return (
     <group ref={group} dispose={null}>
+      <group>
+        <Plane
+          args={[0.5, 0.7]}
+          position={[0.9, 1.3, -2.97]}
+          rotation={[0, 0, 0]}
+        >
+          <meshStandardMaterial attach="material" map={texture} />
+        </Plane>
+      </group>
       <group name="Scene">
         <group name="Vert" />
         <mesh
@@ -172,13 +183,7 @@ export const Room = () => {
           position={[1.91, 1.541, -3.04]}
           scale={[1, 0.8, 1]}
         />
-        <Plane
-          args={[0.5, 0.7]}
-          position={[0.9, 1.3, -2.97]}
-          rotation={[0, 0, 0]}
-        >
-          <meshStandardMaterial attach="material" map={texture} />
-        </Plane>
+
         <group
           name="Sketchfab_model001"
           position={[-1.806, 0.824, -3.695]}
@@ -215,18 +220,21 @@ export const Room = () => {
           castShadow
           receiveShadow
           geometry={nodes.screen001.geometry}
-          position={[-1.854, 1.0256, -3.785]}
+          position={[-1.863, 1.025, -3.787]}
           rotation={[-1.588, -0.077, 1.349]}
-          scale={[0.141, 0.131, 0.1222]}
+          scale={[0.141, 0.1, 0.141]}
         >
           <Html
             transform
             rotation={[Math.PI / 2, -0.03, 0]}
             wrapperClass={styles.html}
-            distanceFactor={0.67}
+            distanceFactor={0.6}
             prepend={false}
           >
-            <iframe src="https://tomasferreras-os.netlify.app/"></iframe>
+            <iframe
+              src="https://tomasferreras-os.netlify.app/"
+              onLoad={() => setIsLoaded(true)}
+            ></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />
         </mesh>

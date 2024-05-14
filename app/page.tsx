@@ -1,7 +1,6 @@
 'use client';
-import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
-import { useSceneCursor } from '@/store/scene-cursor';
+import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
@@ -14,8 +13,6 @@ import { Suspense } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
 export default function Home() {
-  const { media } = useSceneCursor();
-
   return (
     <main className={styles.main}>
       <Canvas
@@ -25,15 +22,14 @@ export default function Home() {
           fov: 40,
         }}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={'loading'}>
           <Experience />
         </Suspense>
         <CustomLights />
         <CustomCamera />
         <CustomEffects />
       </Canvas>
-      <Cursor />
-      <p className={styles.subtitle}>{media.subtitle && media.subtitle}</p>
+      <LoadingScreen />
     </main>
   );
 }

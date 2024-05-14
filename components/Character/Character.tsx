@@ -7,6 +7,7 @@ import * as THREE from 'three';
 export const Character = (props: any) => {
   const { animateCamera, setAnimateCamera, setIsReverse } =
     useCameraAnimation();
+
   const LINE_NB_POINTS = 160;
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
@@ -259,7 +260,7 @@ export const Character = (props: any) => {
           </group>
         </group>
       </group>
-      <Line points={linePoints} opacity={0} linewidth={1} />
+      <Line points={linePoints} opacity={0} linewidth={0} />
     </>
   );
 };
