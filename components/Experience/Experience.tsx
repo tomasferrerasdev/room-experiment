@@ -1,4 +1,5 @@
 import { Character } from '../Character/Character';
+import { Hoverables } from '../Hoverables/Hoverables';
 import { Room } from '../Scene/Room';
 
 export const Experience = () => {
@@ -6,6 +7,7 @@ export const Experience = () => {
     <>
       <Room />
       <Character />
+      <Hoverables />
     </>
   );
 };

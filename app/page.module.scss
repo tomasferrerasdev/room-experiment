@@ -25,3 +25,11 @@
     text-align: center;
   }
 }
+
+.version {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  font-family: var(--font-mono) !important;
+}

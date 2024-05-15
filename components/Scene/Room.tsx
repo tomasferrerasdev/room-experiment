@@ -1,11 +1,5 @@
 import { useLoadingStore } from '@/store/loading-store';
-import {
-  Html,
-  Plane,
-  useAnimations,
-  useGLTF,
-  useTexture,
-} from '@react-three/drei';
+import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
@@ -16,12 +10,7 @@ export const Room = () => {
   const group = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF('/models/room_2.glb');
   const { actions } = useAnimations(animations, group);
-  const texture = useTexture('/assets/doom.jpg');
   const { setIsLoaded } = useLoadingStore();
-
-  useEffect(() => {
-    actions['Cat-Clock-Loop']?.play();
-  }, [actions]);
 
   const material = new THREE.MeshPhongMaterial({ shininess: 10 });
   material.map = materials['mt_background.002'].map;
@@ -29,17 +18,13 @@ export const Room = () => {
     materials['mt_background.002'].color
   ).multiplyScalar(0.8);
 
+  useEffect(() => {
+    actions['Cat-Clock-Loop']?.play();
+  }, [actions]);
+
   return (
     <group ref={group} dispose={null}>
-      <group>
-        <Plane
-          args={[0.5, 0.7]}
-          position={[0.9, 1.3, -2.97]}
-          rotation={[0, 0, 0]}
-        >
-          <meshStandardMaterial attach="material" map={texture} />
-        </Plane>
-      </group>
+      <group></group>
       <group name="Scene">
         <group name="Vert" />
         <mesh
@@ -184,37 +169,6 @@ export const Room = () => {
           scale={[1, 0.8, 1]}
         />
 
-        <group
-          name="Sketchfab_model001"
-          position={[-1.806, 0.824, -3.695]}
-          rotation={[-Math.PI / 2, 0, 1.35]}
-          scale={0.007}
-        >
-          <group
-            name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
-            rotation={[Math.PI / 2, 0, 0]}
-          >
-            <group name="RootNode">
-              <group
-                name="retro_computer_setup"
-                rotation={[-Math.PI / 2, 0, 0]}
-              >
-                <mesh
-                  name="retro_computer_setup_retro_computer_setup_Mat_0"
-                  castShadow
-                  receiveShadow
-                  geometry={
-                    nodes.retro_computer_setup_retro_computer_setup_Mat_0
-                      .geometry
-                  }
-                  material={materials['retro_computer_setup_Mat.001']}
-                  position={[32.742, 2008.411, 0.001]}
-                  rotation={[0, 0, -0.184]}
-                />
-              </group>
-            </group>
-          </group>
-        </group>
         <mesh
           name="screen001"
           castShadow
@@ -225,11 +179,12 @@ export const Room = () => {
           scale={[0.141, 0.1, 0.141]}
         >
           <Html
-            transform
             rotation={[Math.PI / 2, -0.03, 0]}
             wrapperClass={styles.html}
             distanceFactor={0.6}
             prepend={false}
+            transform
+            style={{ transform: 'translate3d(0,0,0)' }}
           >
             <iframe
               src="https://tomasferreras-os.netlify.app/"

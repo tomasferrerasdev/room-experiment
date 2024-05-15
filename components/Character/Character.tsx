@@ -42,8 +42,8 @@ export const Character = (props: any) => {
   );
   const [isMovingRight, setIsMovingRight] = useState(false);
   const [isMovingLeft, setIsMovingLeft] = useState(false);
-  const [threshold, setThreshold] = useState<null | boolean>(null);
   const movementInterval = useRef<number | null>(null);
+  const [threshold, setThreshold] = useState<null | boolean>(null);
 
   useEffect(() => {
     if (actions['Common-Idle']) {
@@ -169,11 +169,6 @@ export const Character = (props: any) => {
   const [animate, setAnimate] = useState(false);
 
   useFrame(() => {
-    if (characterProgress < 2) {
-      setThreshold(true);
-    } else {
-      setThreshold(false);
-    }
     if (animate) {
       if (characterProgress > 0) {
         setCharacterProgress((prevProgress) => {
@@ -198,7 +193,7 @@ export const Character = (props: any) => {
         receiveShadow
         position={characterPosition}
       >
-        {threshold && (
+        {characterProgress < 2 && (
           <Html position={[0, 2.1, 0]}>
             <div className="helperTextCharacter">
               <svg
@@ -216,6 +211,7 @@ export const Character = (props: any) => {
             </div>
           </Html>
         )}
+
         <group name="Scene">
           <group
             name="Armature"

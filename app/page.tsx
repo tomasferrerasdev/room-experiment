@@ -1,6 +1,8 @@
 'use client';
+import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen';
+import { Subtitles } from '@/components/Subtitles/Subtitles';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
@@ -29,6 +31,8 @@ export default function Home() {
         <CustomCamera />
         <CustomEffects />
       </Canvas>
+      <Subtitles />
+      <Cursor />
       <LoadingScreen />
     </main>
   );
@@ -45,6 +49,7 @@ const CustomCamera = () => {
     </>
   );
 };
+
 const CustomEffects = () => {
   return (
     <EffectComposer>

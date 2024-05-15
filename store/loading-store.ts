@@ -2,7 +2,6 @@ import { create } from 'zustand';
 
 interface State {
   isLoaded: boolean;
-
   setIsLoaded: (load: boolean) => void;
 }
 
