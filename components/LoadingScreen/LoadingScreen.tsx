@@ -5,7 +5,6 @@ import styles from './LoadingScreen.module.scss';
 export const LoadingScreen = () => {
   const { progress } = useProgress();
   const { isLoaded } = useLoadingStore();
-
   const resources = [
     'Loading Tomas Ferreras model',
     'Loading Tomas Ferreras room',
@@ -69,17 +68,3 @@ export const LoadingScreen = () => {
     </>
   );
 };
-
-/*
-
-{progress < 100 && !isLoaded && (
-        <div className={styles.loadingScreen}>
-          <div>
-            <p>
-              Ferreras, <br />
-              Tomas Inc.
-            </p>
-          </div>
-        </div>
-      )}
-*/

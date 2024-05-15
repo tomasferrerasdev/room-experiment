@@ -12,15 +12,15 @@ export const Room = () => {
   const { actions } = useAnimations(animations, group);
   const { setIsLoaded } = useLoadingStore();
 
+  useEffect(() => {
+    actions['Cat-Clock-Loop']?.play();
+  }, [actions]);
+
   const material = new THREE.MeshPhongMaterial({ shininess: 10 });
   material.map = materials['mt_background.002'].map;
   material.color = new THREE.Color(
     materials['mt_background.002'].color
   ).multiplyScalar(0.8);
-
-  useEffect(() => {
-    actions['Cat-Clock-Loop']?.play();
-  }, [actions]);
 
   return (
     <group ref={group} dispose={null}>
@@ -189,6 +189,7 @@ export const Room = () => {
             <iframe
               src="https://tomasferreras-os.netlify.app/"
               onLoad={() => setIsLoaded(true)}
+              style={{ pointerEvents: 'none' }}
             ></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />

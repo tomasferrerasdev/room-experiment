@@ -15,6 +15,13 @@ const clickableData = [
       'Computers are like air conditioning they work fine until you start opening windows',
     mediaPath: '/audio/computer.mp3',
   },
+  {
+    id: 3,
+    text: 'Go to the park',
+    subtitleText:
+      'How I long for a stroll in the park and  breathe in the fresh air. Yet, Tomas has not yet mastered the art of developing this part, maybe he do it soon.',
+    mediaPath: '/audio/park.mp3',
+  },
 ];
 
 interface Item {

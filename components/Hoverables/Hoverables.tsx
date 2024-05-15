@@ -5,8 +5,7 @@ export const Hoverables = () => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
 
   const texture = useTexture('/assets/doom.jpg');
-  const { setHoverItem, playAudio } = useCursorStore();
-
+  const { setHoverItem, playAudio, isPlaying } = useCursorStore();
   return (
     <>
       <Plane
@@ -15,7 +14,11 @@ export const Hoverables = () => {
         rotation={[0, 0, 0]}
         onPointerEnter={() => setHoverItem(1)}
         onPointerLeave={() => setHoverItem(null)}
-        onClick={playAudio}
+        onClick={() => {
+          if (!isPlaying) {
+            playAudio();
+          }
+        }}
       >
         <meshStandardMaterial attach="material" map={texture} />
       </Plane>
@@ -26,7 +29,11 @@ export const Hoverables = () => {
         scale={0.007}
         onPointerEnter={() => setHoverItem(2)}
         onPointerLeave={() => setHoverItem(null)}
-        onClick={playAudio}
+        onClick={() => {
+          if (!isPlaying) {
+            playAudio();
+          }
+        }}
       >
         <group
           name="a5bfc7a51ed541f3a5b8b2dd1184f23cfbx"
@@ -49,6 +56,22 @@ export const Hoverables = () => {
           </group>
         </group>
       </group>
+      <mesh
+        onPointerEnter={() => setHoverItem(3)}
+        onPointerLeave={() => setHoverItem(null)}
+        onClick={() => {
+          if (!isPlaying) {
+            playAudio();
+          }
+        }}
+        name="Door"
+        castShadow
+        receiveShadow
+        geometry={nodes.Door.geometry}
+        material={materials['mt_background.003']}
+        position={[1.91, 1.541, -3.04]}
+        scale={[1, 0.8, 1]}
+      />
     </>
   );
 };

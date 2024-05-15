@@ -15,6 +15,10 @@ import { Suspense } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
 export default function Home() {
+  console.log(
+    '%cDinosaurs are Awesome 🦖',
+    'color:#1cce69; background: #3d09bf; font-size: 1.5rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; border: 2px solid#1cce69; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121; font-style: italic;'
+  );
   return (
     <main className={styles.main}>
       <Canvas
@@ -31,9 +35,9 @@ export default function Home() {
         <CustomCamera />
         <CustomEffects />
       </Canvas>
+      <LoadingScreen />
       <Subtitles />
       <Cursor />
-      <LoadingScreen />
     </main>
   );
 }

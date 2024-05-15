@@ -29,3 +29,10 @@ body {
   border: 2px solid #fff;
   padding: 8px 8px 5px 8px;
 }
+
+.helperKeys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 8px;
+}
