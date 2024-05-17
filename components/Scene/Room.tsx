@@ -151,15 +151,6 @@ export const Room = () => {
           <primitive object={nodes.Cat} />
         </group>
         <mesh
-          name="Fridge_Door"
-          castShadow
-          receiveShadow
-          geometry={nodes.Fridge_Door.geometry}
-          material={materials['mt_background.003']}
-          position={[-3.28, 1.493, -1.958]}
-          scale={[1, 0.8, 1]}
-        />
-        <mesh
           name="Door"
           castShadow
           receiveShadow
@@ -189,7 +180,6 @@ export const Room = () => {
             <iframe
               src="https://tomasferreras-os.netlify.app/"
               onLoad={() => setIsLoaded(true)}
-              style={{ pointerEvents: 'none' }}
             ></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />

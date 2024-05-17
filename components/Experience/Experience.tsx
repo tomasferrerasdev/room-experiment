@@ -5,8 +5,8 @@ import { Room } from '../Scene/Room';
 export const Experience = () => {
   return (
     <>
-      <Room />
       <Character />
+      <Room />
       <Hoverables />
     </>
   );

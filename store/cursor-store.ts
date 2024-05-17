@@ -22,6 +22,13 @@ const clickableData = [
       'How I long for a stroll in the park and  breathe in the fresh air. Yet, Tomas has not yet mastered the art of developing this part, maybe he do it soon.',
     mediaPath: '/audio/park.mp3',
   },
+  {
+    id: 4,
+    text: 'Fridge',
+    subtitleText:
+      "I'm craving a beer, but Tomas, the mastermind behind this world, decided it would be fun to leave it at x:-100.",
+    mediaPath: '/audio/beer.mp3',
+  },
 ];
 
 interface Item {

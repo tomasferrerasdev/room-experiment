@@ -11,10 +11,12 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
+
 export default function Home() {
+  const [dpr, setDpr] = useState(0.9);
   console.log(
     '%cDinosaurs are Awesome 🦖',
     'color:#1cce69; background: #3d09bf; font-size: 1.5rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; border: 2px solid#1cce69; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121; font-style: italic;'
@@ -23,7 +25,7 @@ export default function Home() {
     <main className={styles.main}>
       <Canvas
         shadows
-        dpr={[1, 2]}
+        dpr={dpr}
         camera={{
           fov: 40,
         }}

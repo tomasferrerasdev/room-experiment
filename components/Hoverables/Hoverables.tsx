@@ -72,6 +72,22 @@ export const Hoverables = () => {
         position={[1.91, 1.541, -3.04]}
         scale={[1, 0.8, 1]}
       />
+      <mesh
+        onPointerEnter={() => setHoverItem(4)}
+        onPointerLeave={() => setHoverItem(null)}
+        onClick={() => {
+          if (!isPlaying) {
+            playAudio();
+          }
+        }}
+        name="Fridge_Door"
+        castShadow
+        receiveShadow
+        geometry={nodes.Fridge_Door.geometry}
+        material={materials['mt_background.003']}
+        position={[-3.28, 1.493, -1.958]}
+        scale={[1, 0.8, 1]}
+      />
     </>
   );
 };
