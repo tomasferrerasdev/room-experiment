@@ -6,7 +6,7 @@ import styles from './LoadingScreen.module.scss';
 
 export const LoadingScreen = () => {
   const [showBox, setShowBox] = useState(false);
-  const [removeFade, setRemoveFade] = useState(false);
+  const [isFade, setIsFade] = useState(false);
   const { setStartPlaying, startPlaying } = useAudioStore();
   const { isLoaded } = useLoadingStore();
   const { progress } = useProgress();
@@ -21,10 +21,10 @@ export const LoadingScreen = () => {
 
   return (
     <>
-      {startPlaying && !removeFade && (
+      {isFade && (
         <div
           className={styles.fadeScreen}
-          onAnimationEnd={() => setRemoveFade(true)}
+          onAnimationEnd={() => setIsFade(false)}
         ></div>
       )}
       {!startPlaying && (
@@ -32,18 +32,27 @@ export const LoadingScreen = () => {
           {showBox ? (
             <>
               {progress === 100 && isLoaded && (
-                <div
-                  className={`${styles.loadingScreen} ${styles.loadingScreenStart}`}
-                >
-                  <div className={styles.textBox}>
-                    <p>Tomas Ferreras Portfolio 2024</p>
-                    <div className={styles.blinkContainer}>
-                      <p>Click start to begin</p>
-                      <span className={styles.blinkingCursor}></span>
+                <>
+                  <div
+                    className={`${styles.loadingScreen} ${styles.loadingScreenStart}`}
+                  >
+                    <div className={styles.textBox}>
+                      <p>Tomas Ferreras Portfolio 2024</p>
+                      <div className={styles.blinkContainer}>
+                        <p>Click start to begin</p>
+                        <span className={styles.blinkingCursor}></span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setStartPlaying(true);
+                          setIsFade(true);
+                        }}
+                      >
+                        Start
+                      </button>
                     </div>
-                    <button onClick={() => setStartPlaying(true)}>Start</button>
                   </div>
-                </div>
+                </>
               )}
             </>
           ) : (
