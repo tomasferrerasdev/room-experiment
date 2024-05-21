@@ -115,7 +115,10 @@ function Sound({ url }: { url: string }) {
       sound.current.play();
     }
     camera.add(listener);
-    return () => camera.remove(listener);
+    return () => {
+      camera.remove(listener);
+    };
   }, [buffer, camera, listener]);
+
   return <positionalAudio ref={sound} args={[listener]} />;
 }
