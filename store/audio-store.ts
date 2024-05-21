@@ -8,10 +8,6 @@ interface State {
   setVolume: (volume: number) => void;
 }
 
-const sound1 = new Howl({
-  src: ['/audio/computer-ambience.ogg'],
-});
-
 const sound2 = new Howl({
   src: ['/audio/computer-start.m4a'],
 });

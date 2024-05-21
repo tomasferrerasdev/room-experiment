@@ -29,13 +29,14 @@ const clickableData = [
       "I'm craving a beer, but Tomas, the mastermind behind this world, decided it would be fun to leave it at x:-100.",
     mediaPath: '/audio/beer.mp3',
   },
-];
+].map((item) => ({ ...item, audio: new Audio(item.mediaPath) }));
 
 interface Item {
   id: number;
   text: string;
   subtitleText: string;
   mediaPath: string;
+  audio: HTMLAudioElement;
 }
 
 interface State {
@@ -45,6 +46,10 @@ interface State {
   setHoverItem: (id: number | null) => void;
   playAudio: () => void;
 }
+
+clickableData.forEach((item) => {
+  item.audio = new Audio(item.mediaPath);
+});
 
 export const useCursorStore = create<State>((set, get) => ({
   hoverItem: null,
@@ -60,10 +65,12 @@ export const useCursorStore = create<State>((set, get) => ({
   playAudio() {
     const { hoverItem } = get();
     if (hoverItem) {
-      const audio = new Audio(hoverItem.mediaPath);
-      audio.play();
+      if (!hoverItem.audio) {
+        hoverItem.audio = new Audio(hoverItem.mediaPath);
+      }
+      hoverItem.audio.play();
       set({ isPlaying: true, playingItem: hoverItem });
-      audio.onended = () => {
+      hoverItem.audio.onended = () => {
         set({ isPlaying: false, playingItem: null });
       };
     }
