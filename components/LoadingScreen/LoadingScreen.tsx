@@ -21,42 +21,26 @@ export const LoadingScreen = () => {
 
   return (
     <>
-      {isFade && (
-        <div
-          className={styles.fadeScreen}
-          onAnimationEnd={() => setIsFade(false)}
-        ></div>
-      )}
       {!startPlaying && (
-        <>
-          {showBox ? (
-            <>
-              {progress === 100 && isLoaded && (
-                <>
-                  <div
-                    className={`${styles.loadingScreen} ${styles.loadingScreenStart}`}
-                  >
-                    <div className={styles.textBox}>
-                      <p>Tomas Ferreras Portfolio 2024</p>
-                      <div className={styles.blinkContainer}>
-                        <p>Click start to begin</p>
-                        <span className={styles.blinkingCursor}></span>
-                      </div>
-                      <button
-                        onClick={() => {
-                          setStartPlaying(true);
-                          setIsFade(true);
-                        }}
-                      >
-                        Start
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-            </>
+        <div className={`${styles.loadingScreen}`}>
+          {progress === 100 && isLoaded && showBox ? (
+            <div className={styles.textBox}>
+              <p>Tomas Ferreras Portfolio 2024</p>
+              <div className={styles.blinkContainer}>
+                <p>Click start to begin</p>
+                <span className={styles.blinkingCursor}></span>
+              </div>
+              <button
+                onClick={() => {
+                  setStartPlaying(true);
+                  setIsFade(true);
+                }}
+              >
+                Start
+              </button>
+            </div>
           ) : (
-            <div className={styles.loadingScreen}>
+            <>
               <div>
                 <div
                   className={`${styles.loadingScreenTitle} ${styles.spacer}`}
@@ -112,9 +96,15 @@ export const LoadingScreen = () => {
                 </p>
                 <p>5/14/2024</p>
               </div>
-            </div>
+            </>
           )}
-        </>
+        </div>
+      )}
+      {isFade && (
+        <div
+          className={styles.fadeScreen}
+          onAnimationEnd={() => setIsFade(false)}
+        ></div>
       )}
     </>
   );
