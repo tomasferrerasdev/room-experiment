@@ -3,7 +3,7 @@ import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen';
 import { Subtitles } from '@/components/Subtitles/Subtitles';
-import { PerspectiveCamera } from '@react-three/drei';
+import { PerformanceMonitor, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import {
   Bloom,
@@ -16,16 +16,21 @@ import * as THREE from 'three';
 import styles from './page.module.scss';
 
 export default function Home() {
-  const [dpr, setDpr] = useState(0.9);
+  const [isConfigSet, setIsConfigSet] = useState(false);
+  const [performanceConfig, setPerformanceConfig] = useState({
+    dpr: 1,
+    pixelation: 4,
+  });
+
   console.log(
-    '%cDinosaurs are Awesome 🦖',
-    'color:#1cce69; background: #3d09bf; font-size: 1.5rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; border: 2px solid#1cce69; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121; font-style: italic;'
+    "%cHey! how curious you are 👀, if you want to check out the code here's the link: https://github.com/tomasferrerasdev/folio-2k24",
+    'color:#fff; background: #000; font-size: 1.2rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; padding: 4px; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121;'
   );
   return (
     <main className={styles.main}>
       <Canvas
         shadows
-        dpr={dpr}
+        dpr={performanceConfig.dpr}
         camera={{
           fov: 40,
         }}
@@ -35,7 +40,27 @@ export default function Home() {
         </Suspense>
         <CustomLights />
         <CustomCamera />
-        <CustomEffects />
+        <CustomEffects granularity={performanceConfig.pixelation} />
+        <PerformanceMonitor
+          onIncline={() => {
+            if (!isConfigSet) {
+              setPerformanceConfig({
+                dpr: 1,
+                pixelation: 4,
+              });
+              setIsConfigSet(true);
+            }
+          }}
+          onDecline={() => {
+            if (!isConfigSet) {
+              setPerformanceConfig({
+                dpr: 0.7,
+                pixelation: 3,
+              });
+              setIsConfigSet(true);
+            }
+          }}
+        />
       </Canvas>
       <LoadingScreen />
       <Subtitles />
@@ -56,10 +81,10 @@ const CustomCamera = () => {
   );
 };
 
-const CustomEffects = () => {
+const CustomEffects = ({ granularity }: { granularity: number }) => {
   return (
     <EffectComposer>
-      <Pixelation granularity={4} />
+      <Pixelation granularity={granularity} />
       <Vignette eskil={false} offset={0.1} darkness={1} />
       <Bloom
         luminanceThreshold={0}
@@ -74,7 +99,7 @@ const CustomEffects = () => {
 const CustomLights = () => {
   return (
     <>
-      <ambientLight color={'#B3DEB2'} intensity={0.4} />
+      <ambientLight color={'#B3DEB2'} intensity={0.9} />
       <pointLight color="orange" position={[0.8, 1.7, -2.5]} intensity={8} />
     </>
   );
