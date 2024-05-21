@@ -21,7 +21,7 @@ export const Cursor = () => {
     <div className={`${styles.cursor} cursor`}>
       {hoverItem ? (
         <>
-          <Image
+          <img
             src="/assets/eye.gif"
             width={46}
             height={46}

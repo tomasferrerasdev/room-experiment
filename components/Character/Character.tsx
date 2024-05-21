@@ -1,6 +1,5 @@
 import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, Line, useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -43,11 +42,11 @@ export const Character = (props: any) => {
   const [isMovingRight, setIsMovingRight] = useState(false);
   const [isMovingLeft, setIsMovingLeft] = useState(false);
   const movementInterval = useRef<number | null>(null);
-  const [threshold, setThreshold] = useState<null | boolean>(null);
 
   useEffect(() => {
     if (actions['Common-Idle']) {
       actions['Common-Idle'].play();
+      console.log(actions);
     }
   }, [actions]);
 
@@ -97,13 +96,11 @@ export const Character = (props: any) => {
   useEffect(() => {
     const handleKeyPress = (event: { key: string }) => {
       if (event.key === 'e') {
-        if (!animateCamera) {
-          setIsReverse((prevIsReverse) => {
-            const newIsReverse = !prevIsReverse;
-            setAnimateCamera(true);
-            return newIsReverse;
-          });
-        }
+        setIsReverse((prevIsReverse) => {
+          const newIsReverse = !prevIsReverse;
+          setAnimateCamera(true);
+          return newIsReverse;
+        });
       }
     };
 
@@ -166,23 +163,23 @@ export const Character = (props: any) => {
     setAnimateCamera,
   ]);
 
-  const [animate, setAnimate] = useState(false);
+  // const [animate, setAnimate] = useState(false);
 
-  useFrame(() => {
-    if (animate) {
-      if (characterProgress > 0) {
-        setCharacterProgress((prevProgress) => {
-          const nextProgress = Math.max(prevProgress - 0.5, 0);
-          group.current.lookAt(curve.getPointAt(nextProgress / LINE_NB_POINTS));
-          return nextProgress;
-        });
-        actions['Common-Walking']!.play();
-      } else {
-        actions['Common-Walking']!.stop();
-        actions['The-Room-Desk-Code']!.play();
-      }
-    }
-  });
+  // useFrame(() => {
+  //   if (animate) {
+  //     if (characterProgress > 0) {
+  //       setCharacterProgress((prevProgress) => {
+  //         const nextProgress = Math.max(prevProgress - 0.5, 0);
+  //         group.current.lookAt(curve.getPointAt(nextProgress / LINE_NB_POINTS));
+  //         return nextProgress;
+  //       });
+  //       actions['Common-Walking']!.play();
+  //     } else {
+  //       actions['Common-Walking']!.stop();
+  //       actions['The-Room-Desk-Code']!.play();
+  //     }
+  //   }
+  // });
 
   return (
     <>

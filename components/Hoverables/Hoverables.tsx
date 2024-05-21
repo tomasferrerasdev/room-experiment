@@ -1,11 +1,14 @@
 import { useCursorStore } from '@/store/cursor-store';
 import { Plane, useGLTF, useTexture } from '@react-three/drei';
+import { useLoader, useThree } from '@react-three/fiber';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
 export const Hoverables = () => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
-
   const texture = useTexture('/assets/doom.jpg');
   const { setHoverItem, playAudio, isPlaying } = useCursorStore();
+
   return (
     <>
       <Plane
@@ -22,6 +25,9 @@ export const Hoverables = () => {
       >
         <meshStandardMaterial attach="material" map={texture} />
       </Plane>
+      <group position={[-3, 0.824, -4]}>
+        <Sound url="/audio/computer-ambience.ogg" />
+      </group>
       <group
         name="Sketchfab_model001"
         position={[-1.806, 0.824, -3.695]}
@@ -91,3 +97,19 @@ export const Hoverables = () => {
     </>
   );
 };
+
+function Sound({ url }: { url: string }) {
+  const sound = useRef<any>();
+  const { camera } = useThree();
+  const [listener] = useState(() => new THREE.AudioListener());
+  const buffer = useLoader(THREE.AudioLoader, url);
+  useEffect(() => {
+    sound!.current.setBuffer(buffer);
+    sound!.current.setRefDistance(1);
+    sound!.current.setLoop(true);
+    sound!.current.setVolume(0.5);
+    sound!.current.play();
+    camera.add(listener);
+  }, [buffer, camera, listener]);
+  return <positionalAudio ref={sound} args={[listener]} />;
+}
