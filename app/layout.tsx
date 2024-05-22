@@ -24,6 +24,8 @@ const pressStart = Press_Start_2P({
 
 export const metadata: Metadata = {
   title: 'tomas_ferreras_portfolio',
+  description:
+    "I'm a software developer with over a year of professional experience, mostly focused on React, React Native, Next.js, TypeScript, GraphQL and Node.js.",
 };
 
 export default function RootLayout({
