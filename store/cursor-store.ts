@@ -29,13 +29,19 @@ const clickableData = [
       "I'm craving a beer, but Tomas, the mastermind behind this world, decided it would be fun to leave it at x:-100.",
     mediaPath: '/audio/beer.mp3',
   },
+  {
+    id: 5,
+    text: 'Turn Off',
+    subtitleText: '',
+    mediaPath: null,
+  },
 ];
 
 interface Item {
   id: number;
   text: string;
   subtitleText: string;
-  mediaPath: string;
+  mediaPath?: string | null;
 }
 
 interface State {
@@ -59,7 +65,7 @@ export const useCursorStore = create<State>((set, get) => ({
   },
   playAudio() {
     const { hoverItem } = get();
-    if (hoverItem) {
+    if (hoverItem && hoverItem.mediaPath) {
       const audio = new Audio(hoverItem.mediaPath);
       audio.play();
       set({ isPlaying: true, playingItem: hoverItem });

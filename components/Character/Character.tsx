@@ -4,9 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export const Character = (props: any) => {
-  const { animateCamera, setAnimateCamera, setIsReverse } =
-    useCameraAnimation();
-
+  const { startAnimation } = useCameraAnimation();
   const LINE_NB_POINTS = 160;
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
@@ -46,7 +44,6 @@ export const Character = (props: any) => {
   useEffect(() => {
     if (actions['Common-Idle']) {
       actions['Common-Idle'].play();
-      console.log(actions);
     }
   }, [actions]);
 
@@ -96,10 +93,11 @@ export const Character = (props: any) => {
   useEffect(() => {
     const handleKeyPress = (event: { key: string }) => {
       if (event.key === 'e') {
-        setIsReverse((prevIsReverse) => {
-          const newIsReverse = !prevIsReverse;
-          setAnimateCamera(true);
-          return newIsReverse;
+        startAnimation({
+          position: new THREE.Vector3(-1.56, 1.048, -3.7144),
+          rotation: new THREE.Quaternion().setFromEuler(
+            new THREE.Euler(-0.335, 1.3, 0.32, 'XYZ')
+          ),
         });
       }
     };
@@ -152,16 +150,7 @@ export const Character = (props: any) => {
         window.removeEventListener('keydown', handleKeyPress);
       }
     };
-  }, [
-    isMovingRight,
-    isMovingLeft,
-    characterProgress,
-    actions,
-    curve,
-    animateCamera,
-    setIsReverse,
-    setAnimateCamera,
-  ]);
+  }, [isMovingRight, isMovingLeft, characterProgress, actions, curve]);
 
   // const [animate, setAnimate] = useState(false);
 

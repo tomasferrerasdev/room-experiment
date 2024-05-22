@@ -2,35 +2,34 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useState } from 'react';
 import * as THREE from 'three';
 
+interface ITarget {
+  position: THREE.Vector3;
+  rotation: THREE.Quaternion;
+}
+
 export function useCameraAnimation() {
   const { camera } = useThree();
-  const [isReverse, setIsReverse] = useState(false);
-  const [animateCamera, setAnimateCamera] = useState(false);
-  const targetPosition = new THREE.Vector3(-1.56, 1.048, -3.7144349607085867);
-  const targetRotation = new THREE.Quaternion().setFromEuler(
-    new THREE.Euler(-0.335, 1.3, 0.32, 'XYZ')
-  );
+  const [target, setTarget] = useState<ITarget | null>(null);
 
   useFrame((state) => {
-    if (animateCamera) {
-      let target;
-      if (isReverse) {
-        target = new THREE.Vector3(-0.1, 1.3, 3);
-        camera.position.lerp(target, 0.02);
-        camera.quaternion.copy(
-          camera.quaternion.slerp(new THREE.Quaternion(), 0.02)
-        );
-      } else {
-        target = targetPosition;
-        camera.position.lerp(targetPosition, 0.02);
-        camera.quaternion.copy(camera.quaternion.slerp(targetRotation, 0.02));
-      }
+    if (!target) return;
+    camera.position.lerp(target.position, 0.02);
+    camera.quaternion.copy(camera.quaternion.slerp(target.rotation, 0.02));
 
-      if (camera.position.distanceTo(target) < 0.01) {
-        setAnimateCamera(false);
-      }
+    const positionDifference = camera.position.distanceTo(target.position);
+    const rotationDifference = camera.quaternion.angleTo(target.rotation);
+
+    if (positionDifference < 0.01 && rotationDifference < 0.01) {
+      setTarget(null);
     }
   });
 
-  return { isReverse, setIsReverse, animateCamera, setAnimateCamera };
+  const startAnimation = (newTarget: {
+    position: THREE.Vector3;
+    rotation: THREE.Quaternion;
+  }) => {
+    setTarget(newTarget);
+  };
+
+  return { startAnimation };
 }

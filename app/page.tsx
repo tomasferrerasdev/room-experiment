@@ -35,7 +35,7 @@ export default function Home() {
           fov: 40,
         }}
       >
-        <Suspense fallback={'loading'}>
+        <Suspense>
           <Experience />
         </Suspense>
         <CustomLights />

@@ -1,5 +1,6 @@
 import { useAudioStore } from '@/store/audio-store';
 import { useCursorStore } from '@/store/cursor-store';
+import { useCameraAnimation } from '@/utils/animateCamera';
 import { Plane, useGLTF, useTexture } from '@react-three/drei';
 import { useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
@@ -7,10 +8,10 @@ import * as THREE from 'three';
 
 export const Hoverables = () => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
+  const { startAnimation } = useCameraAnimation();
   const texture = useTexture('/assets/doom.jpg');
   const { setHoverItem, playAudio, isPlaying } = useCursorStore();
   const { startPlaying } = useAudioStore();
-
   return (
     <>
       <Plane
@@ -80,6 +81,7 @@ export const Hoverables = () => {
         position={[1.91, 1.541, -3.04]}
         scale={[1, 0.8, 1]}
       />
+
       <mesh
         onPointerEnter={() => setHoverItem(4)}
         onPointerLeave={() => setHoverItem(null)}
@@ -96,6 +98,27 @@ export const Hoverables = () => {
         position={[-3.28, 1.493, -1.958]}
         scale={[1, 0.8, 1]}
       />
+      <group
+        onPointerEnter={() => setHoverItem(5)}
+        onPointerLeave={() => setHoverItem(null)}
+        onClick={() => {
+          startAnimation({
+            position: new THREE.Vector3(-0.1, 1.3, 3),
+            rotation: new THREE.Quaternion().setFromEuler(
+              new THREE.Euler(0, 0, 0, 'XYZ')
+            ),
+          });
+        }}
+      >
+        <mesh position={[-1.807, 0.895, -3.9]} rotation={[-0.3, 1.35, 0]}>
+          <circleGeometry args={[0.005, 16]} />
+          <meshBasicMaterial color={'#7a6737'} />
+        </mesh>
+        <mesh position={[-1.8071, 0.895, -3.9]} rotation={[-0.3, 1.35, 0]}>
+          <circleGeometry args={[0.006, 16]} />
+          <meshBasicMaterial color={'#564926'} />
+        </mesh>
+      </group>
     </>
   );
 };
@@ -107,7 +130,6 @@ function Sound({ url }: { url: string }) {
   const buffer = useLoader(THREE.AudioLoader, url);
   useEffect(() => {
     if (sound) {
-      console.log('first');
       sound.current.setBuffer(buffer);
       sound.current.setRefDistance(1);
       sound.current.setLoop(true);
