@@ -12,7 +12,7 @@ const clickableData = [
     id: 2,
     text: 'Computer',
     subtitleText:
-      'Computers are like air conditioning they work fine until you start opening windows',
+      'I could use it if I just got a little closer. Could you help me with that, maybe using your keyboard arrow keys',
     mediaPath: '/audio/computer.mp3',
   },
   {

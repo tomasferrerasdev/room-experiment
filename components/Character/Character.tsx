@@ -1,6 +1,7 @@
 import { useCursorStore } from '@/store/cursor-store';
 import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, Line, useAnimations, useGLTF } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -33,6 +34,7 @@ export const Character = (props: any) => {
     '/models/character.glb'
   );
   const { actions } = useAnimations(animations, group);
+  const { camera } = useThree();
   const [characterProgress, setCharacterProgress] = useState(
     LINE_NB_POINTS / 2
   );
@@ -59,7 +61,13 @@ export const Character = (props: any) => {
           actions['Common-Walking'].play();
         }
       }
-      if (event.key === 'ArrowRight') {
+      if (
+        event.key === 'ArrowRight' &&
+        !(
+          camera.position.distanceTo(new THREE.Vector3(-1.56, 1.048, -3.7144)) <
+          0.2
+        )
+      ) {
         setIsMovingRight(true);
       } else if (event.key === 'ArrowLeft') {
         setIsMovingLeft(true);

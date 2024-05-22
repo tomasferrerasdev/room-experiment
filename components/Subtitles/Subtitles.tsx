@@ -6,8 +6,8 @@ export const Subtitles = () => {
   return (
     <>
       <p className={styles.version}>
-        This website is under construction 2024, come back soon to see new
-        features
+        This website is under construction, models and room could change. stay
+        tuned!
       </p>
       <div className={styles.subtitle}>
         {isPlaying && playingItem!.subtitleText}
