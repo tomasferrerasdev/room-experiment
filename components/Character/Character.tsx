@@ -233,46 +233,34 @@ export const Character = (props: any) => {
         )}
 
         <group name="Scene">
-          <group
-            name="Armature"
-            rotation={[Math.PI / 2, 0, 0]}
-            scale={0.01}
-            position={[0, 0, 0]}
-          >
+          <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+            <group name="Teodoro">
+              <skinnedMesh
+                name="Teodoro001"
+                geometry={nodes.Teodoro001.geometry}
+                material={materials.PaletteMaterial002}
+                skeleton={nodes.Teodoro001.skeleton}
+              />
+              <skinnedMesh
+                name="Teodoro001_1"
+                geometry={nodes.Teodoro001_1.geometry}
+                material={materials.BODY}
+                skeleton={nodes.Teodoro001_1.skeleton}
+              />
+              <skinnedMesh
+                name="Teodoro001_2"
+                geometry={nodes.Teodoro001_2.geometry}
+                material={materials['Material.001']}
+                skeleton={nodes.Teodoro001_2.skeleton}
+              />
+              <skinnedMesh
+                name="Teodoro001_3"
+                geometry={nodes.Teodoro001_3.geometry}
+                material={materials['Material.002']}
+                skeleton={nodes.Teodoro001_3.skeleton}
+              />
+            </group>
             <primitive object={nodes.mixamorigHips} />
-          </group>
-
-          <group name="Teodoro" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-            <skinnedMesh
-              name="Teodoro001"
-              geometry={nodes.Teodoro001.geometry}
-              material={materials.PaletteMaterial002}
-              skeleton={nodes.Teodoro001.skeleton}
-            />
-            <skinnedMesh
-              name="Teodoro001_1"
-              geometry={nodes.Teodoro001_1.geometry}
-              material={materials.PaletteMaterial003}
-              skeleton={nodes.Teodoro001_1.skeleton}
-            />
-            <skinnedMesh
-              name="Teodoro001_3"
-              geometry={nodes.Teodoro001_3.geometry}
-              material={materials.BODY}
-              skeleton={nodes.Teodoro001_3.skeleton}
-            />
-            <skinnedMesh
-              name="Teodoro001_4"
-              geometry={nodes.Teodoro001_4.geometry}
-              material={materials.SKIN}
-              skeleton={nodes.Teodoro001_4.skeleton}
-            />
-            <skinnedMesh
-              name="Teodoro001_5"
-              geometry={nodes.Teodoro001_5.geometry}
-              material={materials.PaletteMaterial005}
-              skeleton={nodes.Teodoro001_5.skeleton}
-            />
           </group>
         </group>
       </group>
