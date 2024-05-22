@@ -24,7 +24,6 @@ export const Room = () => {
 
   return (
     <group ref={group} dispose={null}>
-      <group></group>
       <group name="Scene">
         <group name="Vert" />
         <mesh

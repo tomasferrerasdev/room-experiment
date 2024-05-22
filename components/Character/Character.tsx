@@ -1,3 +1,4 @@
+import { useCursorStore } from '@/store/cursor-store';
 import { useCameraAnimation } from '@/utils/animateCamera';
 import { Html, Line, useAnimations, useGLTF } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -5,6 +6,7 @@ import * as THREE from 'three';
 
 export const Character = (props: any) => {
   const { startAnimation } = useCameraAnimation();
+  const { setRemoveCursor } = useCursorStore();
   const LINE_NB_POINTS = 160;
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
@@ -93,6 +95,8 @@ export const Character = (props: any) => {
   useEffect(() => {
     const handleKeyPress = (event: { key: string }) => {
       if (event.key === 'e') {
+        setRemoveCursor(true);
+        document.body.style.cursor = 'auto';
         startAnimation({
           position: new THREE.Vector3(-1.56, 1.048, -3.7144),
           rotation: new THREE.Quaternion().setFromEuler(

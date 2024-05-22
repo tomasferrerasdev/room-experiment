@@ -10,8 +10,10 @@ export const Hoverables = () => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
   const { startAnimation } = useCameraAnimation();
   const texture = useTexture('/assets/doom.jpg');
-  const { setHoverItem, playAudio, isPlaying } = useCursorStore();
+  const { setHoverItem, playAudio, isPlaying, setRemoveCursor } =
+    useCursorStore();
   const { startPlaying } = useAudioStore();
+  const { camera } = useThree();
   return (
     <>
       <Plane
@@ -99,8 +101,14 @@ export const Hoverables = () => {
         scale={[1, 0.8, 1]}
       />
       <group
-        onPointerEnter={() => setHoverItem(5)}
-        onPointerLeave={() => setHoverItem(null)}
+        onPointerEnter={() => {
+          setHoverItem(5);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerLeave={() => {
+          setHoverItem(null);
+          document.body.style.cursor = 'none';
+        }}
         onClick={() => {
           startAnimation({
             position: new THREE.Vector3(-0.1, 1.3, 3),
@@ -108,6 +116,8 @@ export const Hoverables = () => {
               new THREE.Euler(0, 0, 0, 'XYZ')
             ),
           });
+          setRemoveCursor(false);
+          document.body.style.cursor = 'none';
         }}
       >
         <mesh position={[-1.807, 0.895, -3.9]} rotation={[-0.3, 1.35, 0]}>

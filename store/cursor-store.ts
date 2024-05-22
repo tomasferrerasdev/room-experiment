@@ -45,17 +45,23 @@ interface Item {
 }
 
 interface State {
+  removeCursor: boolean;
   hoverItem: Item | null;
   playingItem: Item | null;
   isPlaying: boolean;
   setHoverItem: (id: number | null) => void;
+  setRemoveCursor: (value: boolean) => void;
   playAudio: () => void;
 }
 
 export const useCursorStore = create<State>((set, get) => ({
+  removeCursor: false,
   hoverItem: null,
   playingItem: null,
   isPlaying: false,
+  setRemoveCursor(value) {
+    set({ removeCursor: value });
+  },
   setHoverItem(id) {
     if (id === null) {
       set({ hoverItem: null });

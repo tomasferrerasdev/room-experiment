@@ -27,7 +27,7 @@ export default function Home() {
     'color:#fff; background: #000; font-size: 1.2rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; padding: 4px; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121;'
   );
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main}`}>
       <Canvas
         shadows
         dpr={performanceConfig.dpr}
