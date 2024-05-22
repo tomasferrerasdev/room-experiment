@@ -178,7 +178,7 @@ export const Room = () => {
             style={{ transform: 'translate3d(0,0,0)' }}
           >
             <iframe
-              src="http://localhost:3001"
+              src="https://os.tomasferreras.com/"
               onLoad={() => setIsLoaded(true)}
             ></iframe>
           </Html>
