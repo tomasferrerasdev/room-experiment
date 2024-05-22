@@ -5,6 +5,9 @@ export const Subtitles = () => {
   const { isPlaying, playingItem } = useCursorStore();
   return (
     <>
+      <p className={styles.available}>
+        <span></span>Available to work
+      </p>
       <p className={styles.version}>
         This website is under construction, models and room could change. stay
         tuned!

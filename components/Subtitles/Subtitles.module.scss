@@ -19,3 +19,21 @@
   top: 16px;
   font-family: var(--font-mono);
 }
+
+.available {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 99999;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    display: flex;
+    width: 10px;
+    height: 10px;
+    background-color: lawngreen;
+  }
+}
