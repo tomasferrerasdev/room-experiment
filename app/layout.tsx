@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   description:
     "I'm a software developer with over a year of professional experience, mostly focused on React, React Native, Next.js, TypeScript, GraphQL and Node.js.",
   metadataBase: new URL('https://www.tomasferreras.com/'),
+  openGraph: {
+    images: '/og.png',
+  },
 };
 
 export default function RootLayout({
