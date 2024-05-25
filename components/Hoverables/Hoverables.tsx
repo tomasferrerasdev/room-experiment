@@ -1,18 +1,18 @@
-import { useAudioStore } from '@/store/audio-store';
 import { useCursorStore } from '@/store/cursor-store';
 import { useCameraAnimation } from '@/utils/animateCamera';
 import { Plane, useGLTF, useTexture } from '@react-three/drei';
 import { useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { Props } from '../Experience/Experience';
 
-export const Hoverables = () => {
+export const Hoverables = ({ start }: Props) => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
   const { startAnimation } = useCameraAnimation();
   const texture = useTexture('/assets/doom.jpg');
   const { setHoverItem, playAudio, isPlaying, setRemoveCursor } =
     useCursorStore();
-  const { startPlaying } = useAudioStore();
+
   return (
     <>
       <Plane
@@ -30,7 +30,7 @@ export const Hoverables = () => {
         <meshStandardMaterial attach="material" map={texture} />
       </Plane>
       <group position={[-3, 0.824, -4]}>
-        {startPlaying && <Sound url="/audio/computer-ambience.ogg" />}
+        {start && <Sound url="/audio/computer-ambience.ogg" />}
       </group>
       <group
         name="Sketchfab_model001"

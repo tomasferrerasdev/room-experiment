@@ -2,12 +2,16 @@ import { Character } from '../Character/Character';
 import { Hoverables } from '../Hoverables/Hoverables';
 import { Room } from '../Scene/Room';
 
-export const Experience = () => {
+export interface Props {
+  start: boolean;
+}
+
+export const Experience = ({ start }: Props) => {
   return (
     <>
       <Character />
       <Room />
-      <Hoverables />
+      <Hoverables start={start} />
     </>
   );
 };

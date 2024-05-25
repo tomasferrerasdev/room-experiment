@@ -44,7 +44,9 @@ export default function Home() {
           fov: 40,
         }}
       >
-        <Suspense fallback={null}>{start && <Experience />}</Suspense>
+        <Suspense fallback={null}>
+          {start && <Experience start={start} />}
+        </Suspense>
         <CustomLights />
         <CustomCamera />
         <CustomEffects granularity={performanceConfig.pixelation} />

@@ -21,11 +21,15 @@ export const LoadingScreen = ({ started, onStarted }: any) => {
         className={`${styles.loadingScreen}  ${started ? styles.started : ''}`}
       >
         {animationEnd && progress === 100 ? (
-          <>
-            <button disabled={progress < 100} onClick={onStarted}>
+          <div className={styles.btnContainer}>
+            <button
+              disabled={progress < 100}
+              onClick={onStarted}
+              className={styles.btn}
+            >
               Start
             </button>
-          </>
+          </div>
         ) : (
           <>
             <div className={`${styles.loadingScreenTitle} ${styles.spacer}`}>
