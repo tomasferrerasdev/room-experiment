@@ -13,7 +13,6 @@ export const Hoverables = () => {
   const { setHoverItem, playAudio, isPlaying, setRemoveCursor } =
     useCursorStore();
   const { startPlaying } = useAudioStore();
-  const { camera } = useThree();
   return (
     <>
       <Plane

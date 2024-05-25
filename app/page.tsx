@@ -11,16 +11,25 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
 
 export default function Home() {
+  const audio = new Audio('/audio/computer-start.m4a');
+  const [start, setStart] = useState(false);
   const [isConfigSet, setIsConfigSet] = useState(false);
   const [performanceConfig, setPerformanceConfig] = useState({
     dpr: 1,
     pixelation: 4,
   });
+
+  useEffect(() => {
+    if (start) {
+      audio.volume = 0.5;
+      audio.play();
+    }
+  }, [start]);
 
   console.log(
     "%cHey! how curious you are 👀, if you want to check out the code here's the link: https://github.com/tomasferrerasdev/folio-2k24",
@@ -35,9 +44,7 @@ export default function Home() {
           fov: 40,
         }}
       >
-        <Suspense>
-          <Experience />
-        </Suspense>
+        <Suspense fallback={null}>{start && <Experience />}</Suspense>
         <CustomLights />
         <CustomCamera />
         <CustomEffects granularity={performanceConfig.pixelation} />
@@ -62,7 +69,7 @@ export default function Home() {
           }}
         />
       </Canvas>
-      <LoadingScreen />
+      <LoadingScreen started={start} onStarted={() => setStart(true)} />
       <Subtitles />
       <Cursor />
     </main>
