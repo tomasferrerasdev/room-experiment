@@ -16,7 +16,6 @@ import * as THREE from 'three';
 import styles from './page.module.scss';
 
 export default function Home() {
-  const audio = new Audio('/audio/computer-start.m4a');
   const [start, setStart] = useState(false);
   const [isConfigSet, setIsConfigSet] = useState(false);
   const [performanceConfig, setPerformanceConfig] = useState({
@@ -25,6 +24,7 @@ export default function Home() {
   });
 
   useEffect(() => {
+    const audio = new Audio('/audio/computer-start.m4a');
     if (start) {
       audio.volume = 0.5;
       audio.play();
