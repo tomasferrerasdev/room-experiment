@@ -1,4 +1,3 @@
-import { useLoadingStore } from '@/store/loading-store';
 import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
@@ -10,7 +9,6 @@ export const Room = () => {
   const group = useRef<any>();
   const { nodes, materials, animations }: any = useGLTF('/models/room_2.glb');
   const { actions } = useAnimations(animations, group);
-  const { setIsLoaded } = useLoadingStore();
 
   useEffect(() => {
     actions['Cat-Clock-Loop']?.play();
@@ -176,10 +174,7 @@ export const Room = () => {
             transform
             style={{ transform: 'translate3d(0,0,0)' }}
           >
-            <iframe
-              src="https://os.tomasferreras.com/"
-              onLoad={() => setIsLoaded(true)}
-            ></iframe>
+            <iframe src="https://os.tomasferreras.com/"></iframe>
           </Html>
           <RectArealightWithHelper color="#3e9697" />
         </mesh>

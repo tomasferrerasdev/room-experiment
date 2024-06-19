@@ -4,9 +4,8 @@ import { Plane, useGLTF, useTexture } from '@react-three/drei';
 import { useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Props } from '../Experience/Experience';
 
-export const Hoverables = ({ start }: Props) => {
+export const Hoverables = () => {
   const { nodes, materials }: any = useGLTF('/models/room_2.glb');
   const { startAnimation } = useCameraAnimation();
   const texture = useTexture('/assets/doom.jpg');
@@ -30,7 +29,7 @@ export const Hoverables = ({ start }: Props) => {
         <meshStandardMaterial attach="material" map={texture} />
       </Plane>
       <group position={[-3, 0.824, -4]}>
-        {start && <Sound url="/audio/computer-ambience.ogg" />}
+        {/* {start && <Sound url="/audio/computer-ambience.ogg" />} */}
       </group>
       <group
         name="Sketchfab_model001"

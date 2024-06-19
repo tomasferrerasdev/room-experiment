@@ -8,10 +8,7 @@ export const Subtitles = () => {
       <p className={styles.available}>
         <span></span>Available to work
       </p>
-      <p className={styles.version}>
-        This website is under construction, models and room could change. stay
-        tuned!
-      </p>
+
       <div className={styles.subtitle}>
         {isPlaying && playingItem!.subtitleText}
       </div>

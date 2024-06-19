@@ -1,7 +1,6 @@
 'use client';
 import { Cursor } from '@/components/Cursor/Cursor';
 import { Experience } from '@/components/Experience/Experience';
-import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen';
 import { Subtitles } from '@/components/Subtitles/Subtitles';
 import { PerformanceMonitor, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
@@ -11,25 +10,16 @@ import {
   Pixelation,
   Vignette,
 } from '@react-three/postprocessing';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import * as THREE from 'three';
 import styles from './page.module.scss';
 
 export default function Home() {
-  const [start, setStart] = useState(false);
   const [isConfigSet, setIsConfigSet] = useState(false);
   const [performanceConfig, setPerformanceConfig] = useState({
     dpr: 1,
     pixelation: 4,
   });
-
-  useEffect(() => {
-    const audio = new Audio('/audio/computer-start.m4a');
-    if (start) {
-      audio.volume = 0.5;
-      audio.play();
-    }
-  }, [start]);
 
   console.log(
     "%cHey! how curious you are 👀, if you want to check out the code here's the link: https://github.com/tomasferrerasdev/folio-2k24",
@@ -45,7 +35,7 @@ export default function Home() {
         }}
       >
         <Suspense fallback={null}>
-          {start && <Experience start={start} />}
+          <Experience />
         </Suspense>
         <CustomLights />
         <CustomCamera />
@@ -63,7 +53,7 @@ export default function Home() {
           onDecline={() => {
             if (!isConfigSet) {
               setPerformanceConfig({
-                dpr: 0.7,
+                dpr: 0.75,
                 pixelation: 3,
               });
               setIsConfigSet(true);
@@ -71,7 +61,6 @@ export default function Home() {
           }}
         />
       </Canvas>
-      <LoadingScreen started={start} onStarted={() => setStart(true)} />
       <Subtitles />
       <Cursor />
     </main>
