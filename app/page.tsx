@@ -21,10 +21,6 @@ export default function Home() {
     pixelation: 4,
   });
 
-  console.log(
-    "%cHey! how curious you are 👀, if you want to check out the code here's the link: https://github.com/tomasferrerasdev/folio-2k24",
-    'color:#fff; background: #000; font-size: 1.2rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; padding: 4px; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121;'
-  );
   return (
     <main className={`${styles.main}`}>
       <Canvas
@@ -68,6 +64,10 @@ export default function Home() {
 }
 
 const CustomCamera = () => {
+  console.log(
+    "%cHey! how curious you are 👀, if you want to check out the code here's the link: https://github.com/tomasferrerasdev/folio-2k24",
+    'color:#fff; background: #000; font-size: 1.2rem; padding: 0.15rem0.25rem; margin: 1rem; font-family: Helvetica; padding: 4px; border-radius: 4px; font-weight: bold; text-shadow: 1px 1px 1px #0a0121;'
+  );
   return (
     <>
       <PerspectiveCamera
